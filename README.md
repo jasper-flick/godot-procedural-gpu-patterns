@@ -8,7 +8,8 @@ Each Individual tutorial has its own numbered folder.
 
 ## Tutorials
 
-1. [Sine Wave](https://catlikecoding.com/godot/procedural-gpu-patterns/01-sine-waves/)
+1. [Sine Waves](https://catlikecoding.com/godot/procedural-gpu-patterns/01-sine-waves/)
+2. [2D Waves](https://catlikecoding.com/godot/procedural-gpu-patterns/02-2d-waves/)
 
 This is a work in progress. More parts will be added in due time.
 

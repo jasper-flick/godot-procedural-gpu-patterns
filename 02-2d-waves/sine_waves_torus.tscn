@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://b30nh21483001"]
+
+[ext_resource type="Shader" uid="uid://23nxoge5ofk5" path="res://sine_waves.gdshader" id="1_2dse5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dpar4"]
+render_priority = 0
+shader = ExtResource("1_2dse5")
+shader_parameter/animation_speed = Vector2(0.1, 0.2)
+shader_parameter/bumpiness = Vector2(0.212, 0.637)
+shader_parameter/displacement = 0.2000000178814401
+shader_parameter/frequency = Vector2(4, 2)
+shader_parameter/function = 3
+shader_parameter/colors_per_vertex = false
+shader_parameter/derivatives_per_vertex = false
+shader_parameter/vertex_displacement = true
+
+[sub_resource type="TorusMesh" id="TorusMesh_s46f0"]
+
+[node name="Node3D" type="Node3D" unique_id=1837617480]
+
+[node name="Torus" type="MeshInstance3D" parent="." unique_id=1412319325]
+material_override = SubResource("ShaderMaterial_dpar4")
+mesh = SubResource("TorusMesh_s46f0")
