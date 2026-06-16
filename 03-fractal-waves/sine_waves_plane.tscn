@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bqhwmxvwrg7xb"]
+
+[ext_resource type="Shader" uid="uid://23nxoge5ofk5" path="res://sine_waves.gdshader" id="1_2ma71"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dpar4"]
+render_priority = 0
+shader = ExtResource("1_2ma71")
+shader_parameter/animation_speed = Vector2(0.1, 0.2)
+shader_parameter/bumpiness = Vector2(0.5, 0.5)
+shader_parameter/displacement = 0.2000000178814401
+shader_parameter/frequency = Vector2(4, 2)
+shader_parameter/function = 3
+shader_parameter/colors_per_vertex = false
+shader_parameter/derivatives_per_vertex = false
+shader_parameter/vertex_displacement = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_r8t2q"]
+subdivide_width = 31
+subdivide_depth = 31
+
+[node name="Node3D" type="Node3D" unique_id=1837617480]
+
+[node name="Plane" type="MeshInstance3D" parent="." unique_id=1941249539]
+material_override = SubResource("ShaderMaterial_dpar4")
+mesh = SubResource("PlaneMesh_r8t2q")
