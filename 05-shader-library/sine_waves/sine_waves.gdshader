@@ -73,28 +73,24 @@ PatternSample sample_pattern(vec2 frequency, vec2 uv) {
 	return s;
 }
 
-PatternSample normalize_fractal_sample(PatternSample s) {
-	float scale = 1.0 - persistence;
-	if (adaptive_fractal_scale) {
-		scale /= 1.0 - pow(persistence, float(octaves));
-	}
-	return multiply(s, scale);
-}
+#define PATTERN_SAMPLE PatternSample
+#define PATTERN_FREQUENCY_TYPE vec2
+#define SAMPLE_PATTERN_FUNCTION sample_pattern
+#include "res://shader_library/fractal_pattern.gdshaderinc"
 
-PatternSample sample_fractal_pattern(vec2 uv) {
-	PatternSample sum = zero_pattern_sample();
-	vec2 frequency = base_frequency;
-	float amplitude = 1.0;
-	for (int i = 0; i < octaves; i++) {
-		sum = add(sum, multiply(sample_pattern(frequency, uv), amplitude));
-		frequency *= lacunarity;
-		amplitude *= persistence;
-	}
-	return normalize_fractal_sample(sum);
+FractalPatternSettings get_fractal_pattern_settings() {
+	return FractalPatternSettings(
+			base_frequency,
+			octaves,
+			lacunarity,
+			persistence,
+			adaptive_fractal_scale
+	);
 }
 
 void vertex() {
 	PatternSample pattern_sample = sample_fractal_pattern(
+			get_fractal_pattern_settings(),
 			UV + animation_speed * TIME
 	);
 	if (colors_per_vertex) {
@@ -110,6 +106,7 @@ void vertex() {
 
 void fragment() {
 	PatternSample pattern_sample = sample_fractal_pattern(
+			get_fractal_pattern_settings(),
 			UV + animation_speed * TIME
 	);
 	if (colors_per_vertex) {
