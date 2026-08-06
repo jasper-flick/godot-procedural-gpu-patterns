@@ -27,22 +27,9 @@ vec3 colorize(float v) {
 	}
 }
 
-struct PatternSample {
-	float v;
-	vec2 d;
-};
-
-PatternSample zero_pattern_sample() {
-	return PatternSample(0.0, vec2(0.0));
-}
-
-PatternSample add(PatternSample a, PatternSample b) {
-	return PatternSample(a.v + b.v, a.d + b.d);
-}
-
-PatternSample multiply(PatternSample a, float b) {
-	return PatternSample(a.v * b, a.d * b);
-}
+#define PATTERN_SAMPLE_VALUE_TYPE float
+#define PATTERN_SAMPLE_DERIVATIVE_COUNT 2
+#include "res://shader_library/pattern_sample.gdshaderinc"
 
 PatternSample sample_pattern(vec2 frequency, vec2 uv) {
 	vec2 f = frequency * TAU;
@@ -51,29 +38,28 @@ PatternSample sample_pattern(vec2 frequency, vec2 uv) {
 	switch (function) {
 		case 0: // U
 			s.v = sin(t.x);
-			s.d.x = f.x * cos(t.x);
-			s.d.y = 0.0;
+			s.dx = f.x * cos(t.x);
+			s.dy = 0.0;
 			break;
 		case 1: // V
 			s.v = sin(t.y);
-			s.d.x = 0.0;
-			s.d.y = f.y * cos(t.y);
+			s.dx = 0.0;
+			s.dy = f.y * cos(t.y);
 			break;
 		case 2: // UV Average
 			s.v = (sin(t.x) + sin(t.y)) * 0.5;
-			s.d.x = f.x * cos(t.x) * 0.5;
-			s.d.y = f.y * cos(t.y) * 0.5;
+			s.dx = f.x * cos(t.x) * 0.5;
+			s.dy = f.y * cos(t.y) * 0.5;
 			break;
 		case 3: // UV Product
 			s.v = sin(t.x) * sin(t.y);
-			s.d.x = f.x * cos(t.x) * sin(t.y);
-			s.d.y = f.y * sin(t.x) * cos(t.y);
+			s.dx = f.x * cos(t.x) * sin(t.y);
+			s.dy = f.y * sin(t.x) * cos(t.y);
 			break;
 	}
 	return s;
 }
 
-#define PATTERN_SAMPLE PatternSample
 #define PATTERN_FREQUENCY_TYPE vec2
 #define SAMPLE_PATTERN_FUNCTION sample_pattern
 #include "res://shader_library/fractal_pattern.gdshaderinc"
@@ -100,7 +86,9 @@ void vertex() {
 		VERTEX += NORMAL * (pattern_sample.v * displacement);
 	}
 	if (derivatives_per_vertex) {
-		derivatives = pattern_sample.d * displacement * bumpiness;
+		derivatives =
+				vec2(pattern_sample.dx, pattern_sample.dy) *
+				displacement * bumpiness;
 	}
 }
 
@@ -120,7 +108,9 @@ void fragment() {
 		d = derivatives;
 	}
 	else {
-		d = pattern_sample.d * displacement * bumpiness;
+		d =
+				vec2(pattern_sample.dx, pattern_sample.dy) *
+				displacement * bumpiness;
 	}
 	NORMAL = cross(
 			TANGENT + NORMAL * d.x,

@@ -1,21 +1,5 @@
 #ifndef PATTERN_SAMPLE
-#define PATTERN_SAMPLE _DummyPatternSample
-
-struct _DummyPatternSample {
-	float v;
-};
-
-_DummyPatternSample zero_pattern_sample() {
-	return _DummyPatternSample(0.0);
-}
-
-_DummyPatternSample add(_DummyPatternSample a, _DummyPatternSample b) {
-	return _DummyPatternSample(a.v + b.v);
-}
-
-_DummyPatternSample multiply(_DummyPatternSample a, float b) {
-	return _DummyPatternSample(a.v * b);
-}
+#include "pattern_sample.gdshaderinc"
 #endif
 
 #ifndef PATTERN_FREQUENCY_TYPE

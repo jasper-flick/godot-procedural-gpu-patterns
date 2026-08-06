@@ -8,22 +8,8 @@ uniform float lacunarity : hint_range(1.0, 5.0, 0.1) = 2.0;
 uniform float persistence : hint_range(0.0, 0.95, 0.05) = 0.5;
 uniform bool adaptive_fractal_scale = false;
 
-struct PatternSample {
-	vec3 v;
-};
-
-PatternSample zero_pattern_sample() {
-	return PatternSample(vec3(0.0));
-}
-
-PatternSample add(PatternSample a, PatternSample b) {
-	return PatternSample(a.v + b.v);
-}
-
-PatternSample multiply(PatternSample a, float b) {
-	return PatternSample(a.v * b);
-}
-
+#define PATTERN_SAMPLE_VALUE_TYPE vec3
+#include "res://shader_library/pattern_sample.gdshaderinc"
 #include "res://shader_library/hasher.gdshaderinc"
 
 PatternSample sample_pattern(float frequency, vec2 uv) {
@@ -42,7 +28,6 @@ PatternSample sample_pattern(float frequency, vec2 uv) {
 	}
 }
 
-#define PATTERN_SAMPLE PatternSample
 #define PATTERN_FREQUENCY_TYPE float
 #define SAMPLE_PATTERN_FUNCTION sample_pattern
 #include "res://shader_library/fractal_pattern.gdshaderinc"
