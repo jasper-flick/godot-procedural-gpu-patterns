@@ -1,3 +1,16 @@
+/*
+Declares the PatternSample struct used by fractal_pattern.gdshaderinc.
+
+Define PATTERN_SAMPLE_VALUE_TYPE to set the sample value's type.
+The value field is named v.
+The default is float. Other options are vec2, vec3, vec4.
+
+Define PATTERN_SAMPLE_DERIVATIVE_COUNT to set how many derivatives there are.
+Up to four derivatives are supported.
+The derivative fields, if they exist, are named dx, dy, dz, dw.
+The default is 0.
+*/
+
 #ifndef PATTERN_SAMPLE_VALUE_TYPE
 #define PATTERN_SAMPLE_VALUE_TYPE float
 #endif

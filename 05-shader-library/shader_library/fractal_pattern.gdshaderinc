@@ -1,3 +1,23 @@
+/*
+Declares the sample_fractal_pattern function and whatever else it needs.
+Its parameters are:
+	FractalPatternSettings containing the fractal settings,
+	SAMPLE_PATTERN_COORDINATES_TYPE for the sample coordinates.
+
+Include fractal_pattern_settings and pattern_sample first.
+
+Define SAMPLE_PATTERN_COORDINATES_TYPE to set the sample coordinates type.
+The default is vec2. Other options are float, vec3, vec4.
+
+Define SAMPLE_PATTERN_FUNCTION to set the function used for a single sample.
+Only define the function name.
+The matching function declaration must have two parameters:
+	PATTERN_FREQUENCY_TYPE for the sample frequency,
+	SAMPLE_PATTERN_COORDINATES_TYPE for the sample coordinates.
+Note that these parameter types can be different.
+For example, float for a uniform frequency and vec2 for 2D sample coordinates.
+*/
+
 #include "fractal_pattern_settings.gdshaderinc"
 #include "pattern_sample.gdshaderinc"
 

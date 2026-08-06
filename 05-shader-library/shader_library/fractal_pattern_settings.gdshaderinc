@@ -1,3 +1,14 @@
+/*
+Declares the FractalPatternSettings struct used by fractal_pattern.gdshaderinc.
+
+Define PATTERN_FREQUENCY_TYPE to set the type of the base frequency.
+The default is float. Other options are float2, float3, float4.
+
+Define USE_STANDARD_FRACTAL_PATTERN_SETTINGS to declare:
+- Uniform variables for all fractal pattern settings.
+- The standard_fractal_pattern_settings() function to grab these settings.
+*/
+
 #ifndef PATTERN_FREQUENCY_TYPE
 #define PATTERN_FREQUENCY_TYPE float
 #endif
