@@ -6,8 +6,6 @@
 #define PATTERN_SAMPLE_DERIVATIVE_COUNT 0
 #endif
 
-#define PATTERN_SAMPLE PatternSample
-
 struct PatternSample {
 	PATTERN_SAMPLE_VALUE_TYPE v;
 #if PATTERN_SAMPLE_DERIVATIVE_COUNT > 0

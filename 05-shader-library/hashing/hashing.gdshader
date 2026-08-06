@@ -2,17 +2,16 @@ shader_type spatial;
 
 uniform uint hash_seed = 0u;
 uniform int visualization : hint_enum("Grayscale", "RG", "RGB") = 0;
-uniform float base_frequency = 1.0;
-uniform int octaves : hint_range(1, 10) = 1;
-uniform float lacunarity : hint_range(1.0, 5.0, 0.1) = 2.0;
-uniform float persistence : hint_range(0.0, 0.95, 0.05) = 0.5;
-uniform bool adaptive_fractal_scale = false;
+
+#define PATTERN_FREQUENCY_TYPE float
+#define USE_STANDARD_FRACTAL_PATTERN_SETTINGS
+#include "res://shader_library/fractal_pattern_settings.gdshaderinc"
 
 #define PATTERN_SAMPLE_VALUE_TYPE vec3
 #include "res://shader_library/pattern_sample.gdshaderinc"
 #include "res://shader_library/hasher.gdshaderinc"
 
-PatternSample sample_pattern(float frequency, vec2 uv) {
+PatternSample sample_hash(float frequency, vec2 uv) {
 	vec2 coordinates = floor(frequency * uv);
 	Hasher h = hasher(hash_seed);
 	h = hasher(h, coordinates.x);
@@ -28,23 +27,12 @@ PatternSample sample_pattern(float frequency, vec2 uv) {
 	}
 }
 
-#define PATTERN_FREQUENCY_TYPE float
-#define SAMPLE_PATTERN_FUNCTION sample_pattern
+#define SAMPLE_PATTERN_FUNCTION sample_hash
 #include "res://shader_library/fractal_pattern.gdshaderinc"
-
-FractalPatternSettings get_fractal_pattern_settings() {
-	return FractalPatternSettings(
-			base_frequency,
-			octaves,
-			lacunarity,
-			persistence,
-			adaptive_fractal_scale
-	);
-}
 
 void fragment() {
 	ALBEDO = sample_fractal_pattern(
-			get_fractal_pattern_settings(),
+			standard_fractal_pattern_settings(),
 			UV - 0.5
 	).v;
 }

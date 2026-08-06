@@ -1,30 +1,17 @@
-#ifndef PATTERN_SAMPLE
+#include "fractal_pattern_settings.gdshaderinc"
 #include "pattern_sample.gdshaderinc"
-#endif
-
-#ifndef PATTERN_FREQUENCY_TYPE
-#define PATTERN_FREQUENCY_TYPE float
-#endif
 
 #ifndef SAMPLE_PATTERN_FUNCTION
 #define SAMPLE_PATTERN_FUNCTION dummy_sample_pattern
 
-PATTERN_SAMPLE dummy_sample_pattern(PATTERN_FREQUENCY_TYPE frequency, vec2 uv) {
+PatternSample dummy_sample_pattern(PATTERN_FREQUENCY_TYPE frequency, vec2 uv) {
 	return zero_pattern_sample();
 }
 #endif
 
-struct FractalPatternSettings {
-	PATTERN_FREQUENCY_TYPE base_frequency;
-	int octaves;
-	float lacunarity;
-	float persistence;
-	bool adaptive_fractal_scale;
-};
-
-PATTERN_SAMPLE normalize_fractal_sample(
+PatternSample normalize_fractal_sample(
 		FractalPatternSettings settings,
-		PATTERN_SAMPLE s
+		PatternSample s
 ) {
 	float scale = 1.0 - settings.persistence;
 	if (settings.adaptive_fractal_scale) {
@@ -33,11 +20,8 @@ PATTERN_SAMPLE normalize_fractal_sample(
 	return multiply(s, scale);
 }
 
-PATTERN_SAMPLE sample_fractal_pattern(
-		FractalPatternSettings settings,
-		vec2 uv
-) {
-	PATTERN_SAMPLE sum = zero_pattern_sample();
+PatternSample sample_fractal_pattern(FractalPatternSettings settings, vec2 uv) {
+	PatternSample sum = zero_pattern_sample();
 	PATTERN_FREQUENCY_TYPE frequency = settings.base_frequency;
 	float amplitude = 1.0;
 	for (int i = 0; i < settings.octaves; i++) {
