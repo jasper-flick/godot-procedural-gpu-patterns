@@ -6,8 +6,9 @@ The value field is named v.
 The default is float. Other options are vec2, vec3, vec4.
 
 Define PATTERN_SAMPLE_DERIVATIVE_COUNT to set how many derivatives there are.
-Up to four derivatives are supported.
-The derivative fields, if they exist, are named dx, dy, dz, dw.
+The derivatives have the same type as the value.
+Up to three derivatives are supported.
+The derivative fields, if they exist, are named dx, dy, dz.
 The default is 0.
 */
 
@@ -30,9 +31,6 @@ struct PatternSample {
 #if PATTERN_SAMPLE_DERIVATIVE_COUNT > 2
 	PATTERN_SAMPLE_VALUE_TYPE dz;
 #endif
-#if PATTERN_SAMPLE_DERIVATIVE_COUNT > 3
-	PATTERN_SAMPLE_VALUE_TYPE dw;
-#endif
 };
 
 PatternSample zero_pattern_sample() {
@@ -45,9 +43,6 @@ PatternSample zero_pattern_sample() {
 			, PATTERN_SAMPLE_VALUE_TYPE(0.0)
 #endif
 #if PATTERN_SAMPLE_DERIVATIVE_COUNT > 2
-			, PATTERN_SAMPLE_VALUE_TYPE(0.0)
-#endif
-#if PATTERN_SAMPLE_DERIVATIVE_COUNT > 3
 			, PATTERN_SAMPLE_VALUE_TYPE(0.0)
 #endif
 	);
@@ -65,9 +60,6 @@ PatternSample add(PatternSample a, PatternSample b) {
 #if PATTERN_SAMPLE_DERIVATIVE_COUNT > 2
 			, a.dz + b.dz
 #endif
-#if PATTERN_SAMPLE_DERIVATIVE_COUNT > 3
-			, a.dw + b.dw
-#endif
 	);
 }
 
@@ -82,9 +74,6 @@ PatternSample multiply(PatternSample a, float b) {
 #endif
 #if PATTERN_SAMPLE_DERIVATIVE_COUNT > 2
 			, a.dz * b
-#endif
-#if PATTERN_SAMPLE_DERIVATIVE_COUNT > 3
-			, a.dw * b
 #endif
 	);
 }
