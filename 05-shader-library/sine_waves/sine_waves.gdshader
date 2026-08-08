@@ -27,11 +27,10 @@ vec3 colorize(float v) {
 	}
 }
 
-#define PATTERN_SAMPLE_VALUE_TYPE float
 #define PATTERN_SAMPLE_DERIVATIVE_COUNT 2
 #include "res://shader_library/pattern_sample.gdshaderinc"
 
-PatternSample sample_pattern(vec2 frequency, vec2 uv) {
+PatternSample sample_pattern(int octave, vec2 frequency, vec2 uv) {
 	vec2 f = frequency * TAU;
 	vec2 t = f * uv;
 	PatternSample s;
@@ -60,19 +59,8 @@ PatternSample sample_pattern(vec2 frequency, vec2 uv) {
 	return s;
 }
 
-//#define PATTERN_FREQUENCY_TYPE vec2
 #define SAMPLE_PATTERN_FUNCTION sample_pattern
 #include "res://shader_library/fractal_pattern.gdshaderinc"
-
-//FractalPatternSettings get_fractal_pattern_settings() {
-	//return FractalPatternSettings(
-			//base_frequency,
-			//octaves,
-			//lacunarity,
-			//persistence,
-			//adaptive_fractal_scale
-	//);
-//}
 
 void vertex() {
 	PatternSample pattern_sample = sample_fractal_pattern(

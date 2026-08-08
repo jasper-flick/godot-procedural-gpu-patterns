@@ -10,11 +10,12 @@ Define SAMPLE_PATTERN_COORDINATES_TYPE to set the sample coordinates type.
 The default is vec2. Other options are float, vec3, vec4.
 
 Define SAMPLE_PATTERN_FUNCTION to set the function used for a single sample.
-Only define the function name.
-The matching function declaration must have two parameters:
+Only define the function name, without parameters.
+The matching function declaration must have three parameters:
+	int for the octave index,
 	PATTERN_FREQUENCY_TYPE for the sample frequency,
 	SAMPLE_PATTERN_COORDINATES_TYPE for the sample coordinates.
-Note that these parameter types can be different.
+Note that the frequency and coordinates can have different types.
 For example, float for a uniform frequency and vec2 for 2D sample coordinates.
 */
 
@@ -29,6 +30,7 @@ For example, float for a uniform frequency and vec2 for 2D sample coordinates.
 #define SAMPLE_PATTERN_FUNCTION dummy_sample_pattern
 
 PatternSample dummy_sample_pattern(
+		int octave,
 		PATTERN_FREQUENCY_TYPE frequency,
 		SAMPLE_PATTERN_COORDINATES_TYPE coordinates
 ) {
@@ -56,7 +58,7 @@ PatternSample sample_fractal_pattern(
 	float amplitude = 1.0;
 	for (int i = 0; i < settings.octaves; i++) {
 		sum = add(sum, multiply(
-				SAMPLE_PATTERN_FUNCTION(frequency, coordinates), amplitude));
+				SAMPLE_PATTERN_FUNCTION(i, frequency, coordinates), amplitude));
 		frequency *= settings.lacunarity;
 		amplitude *= settings.persistence;
 	}
