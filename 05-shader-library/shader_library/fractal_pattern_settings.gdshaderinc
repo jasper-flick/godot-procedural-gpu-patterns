@@ -37,4 +37,15 @@ FractalPatternSettings standard_fractal_pattern_settings() {
 			adaptive_fractal_scale
 	);
 }
+#else
+FractalPatternSettings default_fractal_pattern_settings() {
+	FractalPatternSettings settings = FractalPatternSettings(
+			PATTERN_FREQUENCY_TYPE(1.0),
+			1,
+			2.0,
+			0.5,
+			false
+	);
+	return settings;
+}
 #endif
