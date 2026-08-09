@@ -7,6 +7,7 @@ The default is float. Other options are float2, float3, float4.
 Define USE_STANDARD_FRACTAL_PATTERN_SETTINGS to declare:
 - Uniform variables for all fractal pattern settings.
 - The standard_fractal_pattern_settings() function to grab these settings.
+Otherwise the default_fractal_pattern_settings function is declared.
 */
 
 #ifndef PATTERN_FREQUENCY_TYPE
