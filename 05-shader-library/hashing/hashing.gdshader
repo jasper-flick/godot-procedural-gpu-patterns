@@ -16,14 +16,19 @@ PatternSample sample_hash(int octave, float frequency, vec2 uv) {
 	h = hasher(h, coordinates.x);
 	h = hasher(h, coordinates.y);
 	uint hash = hash(h);
+	PatternSample s = zero_pattern_sample();
 	switch (visualization) {
 		case 0: // Grayscale
-			return PatternSample(vec3(hash_to_float(hash)));
+			s.v = vec3(hash_to_float(hash));
+			break;
 		case 1: // RG
-			return PatternSample(vec3(hash_to_vec2(hash), 0.0));
+			s.v = vec3(hash_to_vec2(hash), 0.0);
+			break;
 		case 2: // RGB
-			return PatternSample(hash_to_vec3(hash));
+			s.v = hash_to_vec3(hash);
+			break;
 	}
+	return s;
 }
 
 #define SAMPLE_PATTERN_FUNCTION sample_hash

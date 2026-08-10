@@ -27,7 +27,6 @@ vec3 colorize(float v) {
 	}
 }
 
-#define PATTERN_SAMPLE_DERIVATIVE_COUNT 2
 #include "res://shader_library/pattern_sample.gdshaderinc"
 
 PatternSample sample_pattern(int octave, vec2 frequency, vec2 uv) {
