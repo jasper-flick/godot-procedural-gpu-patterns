@@ -9,11 +9,11 @@ Include fractal_pattern_settings and pattern_sample first.
 Define SAMPLE_PATTERN_COORDINATES_TYPE to set the sample coordinates type.
 The default is vec2. Other options are float, vec3, vec4.
 
-Define SAMPLE_PATTERN_FUNCTION to set the function used for a single sample.
-Only define the function name, without parameters.
+Define SAMPLE_PATTERN_FUNCTION to set the function for sampling an octave.
+Only define the function name, without parameter list.
 The matching function declaration must have three parameters:
-- int for the octave index.
-- PATTERN_FREQUENCY_TYPE for the sample frequency.
+- int for the octave's index.
+- PATTERN_FREQUENCY_TYPE for the octave's sample frequency.
 - SAMPLE_PATTERN_COORDINATES_TYPE for the sample coordinates.
 Note that the frequency and coordinates can have different types.
 For example, float for a uniform frequency and vec2 for 2D sample coordinates.
