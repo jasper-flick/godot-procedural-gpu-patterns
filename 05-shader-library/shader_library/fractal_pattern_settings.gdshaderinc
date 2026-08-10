@@ -1,12 +1,21 @@
 /*
 Declares the FractalPatternSettings struct used by fractal_pattern.gdshaderinc.
 
-Define PATTERN_FREQUENCY_TYPE to set the type of the base frequency.
+The following settings are supported:
+- base_frequency: Frequency of first octave (default 1.0 for all components).
+- octaves: The amount of octaves (default 1).
+- lacunarity: Frequency multiplier for successive octaves (default 2.0).
+- persistence: Amplitude multiplier for successive octaves (default 0.5).
+- adaptive_fractal_scale: How to scale the total amplitude (default false):
+  - true: Based on actual octaves.
+  - false: Based on infinite octaves.
+
+Define PATTERN_FREQUENCY_TYPE to set the type of base_frequency.
 The default is float. Other options are float2, float3, float4.
 
 Define USE_STANDARD_FRACTAL_PATTERN_SETTINGS to declare:
 - Uniform variables for all fractal pattern settings.
-- The standard_fractal_pattern_settings() function to grab these settings.
+- The standard_fractal_pattern_settings function to grab these settings.
 Otherwise the default_fractal_pattern_settings function is declared.
 */
 
