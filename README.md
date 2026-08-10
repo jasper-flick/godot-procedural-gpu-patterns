@@ -12,6 +12,7 @@ Each Individual tutorial has its own numbered folder.
 2. [2D Waves](https://catlikecoding.com/godot/procedural-gpu-patterns/02-2d-waves/)
 3. [Fractal Waves](https://catlikecoding.com/godot/procedural-gpu-patterns/03-fractal-waves/)
 4. [Hashing](https://catlikecoding.com/godot/procedural-gpu-patterns/04-hashing/)
+5. [Shader Library](https://catlikecoding.com/godot/procedural-gpu-patterns/05-shader-library/)
 
 This is a work in progress. More parts will be added in due time.
 
