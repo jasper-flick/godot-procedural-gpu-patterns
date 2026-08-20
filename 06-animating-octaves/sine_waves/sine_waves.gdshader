@@ -1,11 +1,12 @@
 shader_type spatial;
 
-uniform vec2 animation_speed = vec2(0.0);
 uniform vec2 bumpiness = vec2(1.0);
 uniform float displacement : hint_range(-1.0, 1.0) = 0.2;
 
 #define PATTERN_FREQUENCY_TYPE vec2
+#define PATTERN_ANIMATION_TYPE vec2
 #define USE_STANDARD_FRACTAL_PATTERN_SETTINGS
+#define USE_PATTERN_ANIMATION_SETTINGS
 #include "res://shader_library/fractal_pattern_settings.gdshaderinc"
 
 uniform int function : hint_enum("U", "V", "UV Average", "UV Product") = 0;
@@ -29,9 +30,9 @@ vec3 colorize(float v) {
 
 #include "res://shader_library/pattern_sample.gdshaderinc"
 
-PatternSample sample_pattern(int octave, vec2 frequency, vec2 uv, float time) {
+PatternSample sample_pattern(int octave, vec2 frequency, vec2 uv, vec2 time) {
 	vec2 f = frequency * TAU;
-	vec2 t = f * uv;
+	vec2 t = f * (uv + time);
 	PatternSample s;
 	switch (function) {
 		case 0: // U
@@ -64,8 +65,8 @@ PatternSample sample_pattern(int octave, vec2 frequency, vec2 uv, float time) {
 void vertex() {
 	PatternSample pattern_sample = sample_fractal_pattern(
 			standard_fractal_pattern_settings(),
-			UV + animation_speed * TIME,
-			0.0
+			UV,
+			TIME
 	);
 	if (colors_per_vertex) {
 		COLOR.rgb = colorize(pattern_sample.v);
@@ -83,8 +84,8 @@ void vertex() {
 void fragment() {
 	PatternSample pattern_sample = sample_fractal_pattern(
 			standard_fractal_pattern_settings(),
-			UV + animation_speed * TIME,
-			0.0
+			UV,
+			TIME
 	);
 	if (colors_per_vertex) {
 		ALBEDO = COLOR.rgb;
