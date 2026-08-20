@@ -29,7 +29,7 @@ vec3 colorize(float v) {
 
 #include "res://shader_library/pattern_sample.gdshaderinc"
 
-PatternSample sample_pattern(int octave, vec2 frequency, vec2 uv) {
+PatternSample sample_pattern(int octave, vec2 frequency, vec2 uv, float time) {
 	vec2 f = frequency * TAU;
 	vec2 t = f * uv;
 	PatternSample s;
@@ -64,7 +64,8 @@ PatternSample sample_pattern(int octave, vec2 frequency, vec2 uv) {
 void vertex() {
 	PatternSample pattern_sample = sample_fractal_pattern(
 			standard_fractal_pattern_settings(),
-			UV + animation_speed * TIME
+			UV + animation_speed * TIME,
+			0.0
 	);
 	if (colors_per_vertex) {
 		COLOR.rgb = colorize(pattern_sample.v);
@@ -82,7 +83,8 @@ void vertex() {
 void fragment() {
 	PatternSample pattern_sample = sample_fractal_pattern(
 			standard_fractal_pattern_settings(),
-			UV + animation_speed * TIME
+			UV + animation_speed * TIME,
+			0.0
 	);
 	if (colors_per_vertex) {
 		ALBEDO = COLOR.rgb;

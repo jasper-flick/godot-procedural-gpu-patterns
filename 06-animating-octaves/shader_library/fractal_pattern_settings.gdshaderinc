@@ -13,8 +13,16 @@ The following settings are supported:
 Define PATTERN_FREQUENCY_TYPE to set the type of base_frequency.
 The default is float. Other options are float2, float3, float4.
 
+Define PATTERN_ANIMATION_TYPE to set the type of base_velocity.
+The default is float. Other options are float2, float3, float4.
+Note that the animation and frequency can have different types.
+Animation must either be float or match the frequency type.
+For example, float for a uniform animation and vec2 for separate 2D frequencies.
+
 Define USE_STANDARD_FRACTAL_PATTERN_SETTINGS to declare:
-- Uniform variables for all fractal pattern settings.
+- Uniform variables for the default fractal pattern settings.
+  Define USE_PATTERN_ANIMATION_SETTINGS to also declare:
+  - Uniform variables for fractal pattern animation.
 - The standard_fractal_pattern_settings function to grab these settings.
 Otherwise the default_fractal_pattern_settings function is declared.
 */
@@ -23,12 +31,18 @@ Otherwise the default_fractal_pattern_settings function is declared.
 #define PATTERN_FREQUENCY_TYPE float
 #endif
 
+#ifndef PATTERN_ANIMATION_TYPE
+#define PATTERN_ANIMATION_TYPE float
+#endif
+
 struct FractalPatternSettings {
 	PATTERN_FREQUENCY_TYPE base_frequency;
 	int octaves;
 	float lacunarity;
 	float persistence;
 	bool adaptive_fractal_scale;
+	PATTERN_ANIMATION_TYPE base_animation;
+	PATTERN_ANIMATION_TYPE octave_animation;
 };
 
 #ifdef USE_STANDARD_FRACTAL_PATTERN_SETTINGS
@@ -38,6 +52,11 @@ uniform float lacunarity : hint_range(1.0, 5.0, 0.1) = 2.0;
 uniform float persistence : hint_range(0.0, 0.95, 0.05) = 0.5;
 uniform bool adaptive_fractal_scale = false;
 
+#ifdef USE_PATTERN_ANIMATION_SETTINGS
+uniform PATTERN_ANIMATION_TYPE base_animation = PATTERN_ANIMATION_TYPE(1.0);
+uniform PATTERN_ANIMATION_TYPE octave_animation = PATTERN_ANIMATION_TYPE(1.0);
+#endif
+
 FractalPatternSettings standard_fractal_pattern_settings() {
 	return FractalPatternSettings(
 			base_frequency,
@@ -45,6 +64,13 @@ FractalPatternSettings standard_fractal_pattern_settings() {
 			lacunarity,
 			persistence,
 			adaptive_fractal_scale
+#ifdef USE_PATTERN_ANIMATION_SETTINGS
+			, base_animation
+			, octave_animation
+#else
+			, PATTERN_ANIMATION_TYPE(1.0)
+			, PATTERN_ANIMATION_TYPE(1.0)
+#endif
 	);
 }
 #else
@@ -54,7 +80,9 @@ FractalPatternSettings default_fractal_pattern_settings() {
 			1,
 			2.0,
 			0.5,
-			false
+			false,
+			PATTERN_ANIMATION_TYPE(1.0),
+			PATTERN_ANIMATION_TYPE(1.0)
 	);
 	return settings;
 }

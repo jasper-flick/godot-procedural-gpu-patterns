@@ -3,6 +3,7 @@ Declares the sample_fractal_pattern function and whatever else it needs.
 Its parameters are:
 - FractalPatternSettings for the fractal settings.
 - SAMPLE_PATTERN_COORDINATES_TYPE for the sample coordinates.
+- float for the time used for animation.
 
 Include fractal_pattern_settings and pattern_sample first.
 
@@ -15,7 +16,9 @@ The matching function declaration must have three parameters:
 - int for the octave's index.
 - PATTERN_FREQUENCY_TYPE for the octave's sample frequency.
 - SAMPLE_PATTERN_COORDINATES_TYPE for the sample coordinates.
+- PATTERN_ANIMATION_TYPE for the octave's animation offset.
 Note that the frequency and coordinates can have different types.
+Frequency must either be float or match the coordinates type.
 For example, float for a uniform frequency and vec2 for 2D sample coordinates.
 */
 
@@ -32,7 +35,8 @@ For example, float for a uniform frequency and vec2 for 2D sample coordinates.
 PatternSample dummy_sample_pattern(
 		int octave,
 		PATTERN_FREQUENCY_TYPE frequency,
-		SAMPLE_PATTERN_COORDINATES_TYPE coordinates
+		SAMPLE_PATTERN_COORDINATES_TYPE coordinates,
+		PATTERN_ANIMATION_TYPE animation_offset
 ) {
 	return zero_pattern_sample();
 }
@@ -51,15 +55,20 @@ PatternSample normalize_fractal_sample(
 
 PatternSample sample_fractal_pattern(
 		FractalPatternSettings settings,
-		SAMPLE_PATTERN_COORDINATES_TYPE coordinates
+		SAMPLE_PATTERN_COORDINATES_TYPE coordinates,
+		float time
 ) {
 	PatternSample sum = zero_pattern_sample();
 	PATTERN_FREQUENCY_TYPE frequency = settings.base_frequency;
+	PATTERN_ANIMATION_TYPE animation_offset = settings.base_animation * time;
 	float amplitude = 1.0;
 	for (int i = 0; i < settings.octaves; i++) {
-		sum = add(sum, multiply(
-				SAMPLE_PATTERN_FUNCTION(i, frequency, coordinates), amplitude));
+		PatternSample sample = SAMPLE_PATTERN_FUNCTION(
+				i, frequency, coordinates, animation_offset
+		);
+		sum = add(sum, multiply(sample, amplitude));
 		frequency *= settings.lacunarity;
+		animation_offset *= settings.octave_animation;
 		amplitude *= settings.persistence;
 	}
 	return normalize_fractal_sample(settings, sum);
