@@ -16,7 +16,7 @@ PatternSample sample_hash(int octave, float frequency, vec2 uv, float time) {
 	Hasher h = hasher(hash_seed + uint(octave));
 	h = hasher(h, coordinates.x);
 	h = hasher(h, coordinates.y);
-	h = hasher(h, floor(time));
+	h = hasher(h, floor(time + fract((coordinates.x + coordinates.y) * 0.5)));
 	uint hash = hash(h);
 	PatternSample s = zero_pattern_sample();
 	switch (visualization) {
