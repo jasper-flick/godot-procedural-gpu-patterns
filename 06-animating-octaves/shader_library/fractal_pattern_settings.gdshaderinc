@@ -42,7 +42,7 @@ struct FractalPatternSettings {
 	float persistence;
 	bool adaptive_fractal_scale;
 	PATTERN_ANIMATION_TYPE base_animation;
-	PATTERN_ANIMATION_TYPE octave_animation;
+	PATTERN_ANIMATION_TYPE temporal_lacunarity;
 };
 
 #ifdef USE_STANDARD_FRACTAL_PATTERN_SETTINGS
@@ -54,7 +54,7 @@ uniform bool adaptive_fractal_scale = false;
 
 #ifdef USE_PATTERN_ANIMATION_SETTINGS
 uniform PATTERN_ANIMATION_TYPE base_animation = PATTERN_ANIMATION_TYPE(1.0);
-uniform PATTERN_ANIMATION_TYPE octave_animation = PATTERN_ANIMATION_TYPE(1.0);
+uniform PATTERN_ANIMATION_TYPE temporal_lacunarity = PATTERN_ANIMATION_TYPE(2.0);
 #endif
 
 FractalPatternSettings standard_fractal_pattern_settings() {
@@ -66,7 +66,7 @@ FractalPatternSettings standard_fractal_pattern_settings() {
 			adaptive_fractal_scale
 #ifdef USE_PATTERN_ANIMATION_SETTINGS
 			, base_animation
-			, octave_animation
+			, temporal_lacunarity
 #else
 			, PATTERN_ANIMATION_TYPE(1.0)
 			, PATTERN_ANIMATION_TYPE(1.0)

@@ -68,7 +68,7 @@ PatternSample sample_fractal_pattern(
 		);
 		sum = add(sum, multiply(sample, amplitude));
 		frequency *= settings.lacunarity;
-		animation_offset *= settings.octave_animation;
+		animation_offset *= settings.temporal_lacunarity;
 		amplitude *= settings.persistence;
 	}
 	return normalize_fractal_sample(settings, sum);
