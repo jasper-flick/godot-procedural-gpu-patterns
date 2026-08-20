@@ -6,7 +6,7 @@ uniform float displacement : hint_range(-1.0, 1.0) = 0.2;
 #define PATTERN_FREQUENCY_TYPE vec2
 #define PATTERN_ANIMATION_TYPE vec2
 #define USE_STANDARD_FRACTAL_PATTERN_SETTINGS
-#define USE_PATTERN_ANIMATION_SETTINGS
+#define USE_FRACTAL_PATTERN_ANIMATION_SETTINGS
 #include "res://shader_library/fractal_pattern_settings.gdshaderinc"
 
 uniform int function : hint_enum("U", "V", "UV Average", "UV Product") = 0;

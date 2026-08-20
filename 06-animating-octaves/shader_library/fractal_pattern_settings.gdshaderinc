@@ -21,7 +21,7 @@ For example, float for a uniform animation and vec2 for separate 2D frequencies.
 
 Define USE_STANDARD_FRACTAL_PATTERN_SETTINGS to declare:
 - Uniform variables for the default fractal pattern settings.
-  Define USE_PATTERN_ANIMATION_SETTINGS to also declare:
+  Define USE_FRACTAL_PATTERN_ANIMATION_SETTINGS to also declare:
   - Uniform variables for fractal pattern animation.
 - The standard_fractal_pattern_settings function to grab these settings.
 Otherwise the default_fractal_pattern_settings function is declared.
@@ -52,7 +52,7 @@ uniform float lacunarity : hint_range(1.0, 5.0, 0.1) = 2.0;
 uniform float persistence : hint_range(0.0, 0.95, 0.05) = 0.5;
 uniform bool adaptive_fractal_scale = false;
 
-#ifdef USE_PATTERN_ANIMATION_SETTINGS
+#ifdef USE_FRACTAL_PATTERN_ANIMATION_SETTINGS
 uniform PATTERN_ANIMATION_TYPE base_animation = PATTERN_ANIMATION_TYPE(1.0);
 uniform PATTERN_ANIMATION_TYPE temporal_lacunarity = PATTERN_ANIMATION_TYPE(2.0);
 #endif
@@ -64,7 +64,7 @@ FractalPatternSettings standard_fractal_pattern_settings() {
 			lacunarity,
 			persistence,
 			adaptive_fractal_scale
-#ifdef USE_PATTERN_ANIMATION_SETTINGS
+#ifdef USE_FRACTAL_PATTERN_ANIMATION_SETTINGS
 			, base_animation
 			, temporal_lacunarity
 #else
