@@ -5,16 +5,15 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dpar4"]
 render_priority = 0
 shader = ExtResource("1_2dse5")
-shader_parameter/animation_speed = Vector2(0.1, 0.2)
 shader_parameter/bumpiness = Vector2(0.212, 0.637)
 shader_parameter/displacement = 0.2000000178814401
-shader_parameter/base_frequency = Vector2(4, 2)
+shader_parameter/base_frequency = Vector2(3, 2)
 shader_parameter/octaves = 3
 shader_parameter/lacunarity = 2.0
 shader_parameter/persistence = 0.5
+shader_parameter/base_animation = Vector2(0.2, 0.1)
+shader_parameter/temporal_lacunarity = Vector2(0.5, 1.5)
 shader_parameter/adaptive_fractal_scale = false
-shader_parameter/base_animation = Vector2(0.05, 0.1)
-shader_parameter/temporal_lacunarity = Vector2(-1.25, 1.25)
 shader_parameter/function = 2
 shader_parameter/colors_per_vertex = false
 shader_parameter/derivatives_per_vertex = false

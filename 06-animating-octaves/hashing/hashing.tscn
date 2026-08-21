@@ -12,9 +12,9 @@ shader_parameter/base_frequency = 16.0
 shader_parameter/octaves = 4
 shader_parameter/lacunarity = 2.0
 shader_parameter/persistence = 0.5
-shader_parameter/adaptive_fractal_scale = false
 shader_parameter/base_animation = 2.0
 shader_parameter/temporal_lacunarity = 2.0
+shader_parameter/adaptive_fractal_scale = false
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_r8t2q"]
 subdivide_width = 31
