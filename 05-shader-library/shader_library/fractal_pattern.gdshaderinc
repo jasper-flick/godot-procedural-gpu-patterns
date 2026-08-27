@@ -15,7 +15,7 @@ The matching function declaration must have three parameters:
 - int for the octave's index.
 - PATTERN_FREQUENCY_TYPE for the octave's sample frequency.
 - SAMPLE_PATTERN_COORDINATES_TYPE for the sample coordinates.
-Note that the frequency and coordinates can have different types.
+Frequency must either be float or match the coordinates type.
 For example, float for a uniform frequency and vec2 for 2D sample coordinates.
 */
 
