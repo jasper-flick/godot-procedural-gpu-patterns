@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cnqswycavvf56"]
+
+[ext_resource type="Shader" uid="uid://cpjvy7ifltbao" path="res://hashing/hashing.gdshader" id="1_gj3uj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5faqg"]
+render_priority = 0
+shader = ExtResource("1_gj3uj")
+shader_parameter/hash_seed = 0
+shader_parameter/visualization = 2
+shader_parameter/staggered_animation = true
+shader_parameter/base_frequency = 8.0
+shader_parameter/octaves = 3
+shader_parameter/lacunarity = 2.0
+shader_parameter/persistence = 0.5
+shader_parameter/base_animation = 1.0
+shader_parameter/temporal_lacunarity = 2.0
+shader_parameter/adaptive_fractal_scale = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_r8t2q"]
+subdivide_width = 31
+subdivide_depth = 31
+
+[node name="Node3D" type="Node3D" unique_id=1837617480]
+
+[node name="Plane" type="MeshInstance3D" parent="." unique_id=1941249539]
+material_override = SubResource("ShaderMaterial_5faqg")
+mesh = SubResource("PlaneMesh_r8t2q")
