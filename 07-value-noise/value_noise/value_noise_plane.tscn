@@ -6,12 +6,13 @@
 render_priority = 0
 shader = ExtResource("1_py0ja")
 shader_parameter/hash_seed = 0
+shader_parameter/animation = true
 shader_parameter/colored = true
 shader_parameter/color_min = Color(1, 0, 0, 1)
 shader_parameter/color_mid = Color(0, 0, 0, 1)
 shader_parameter/color_max = Color(1, 1, 1, 1)
 shader_parameter/base_frequency = 8.0
-shader_parameter/octaves = 1
+shader_parameter/octaves = 4
 shader_parameter/lacunarity = 2.0
 shader_parameter/persistence = 0.5
 shader_parameter/base_animation = 1.0

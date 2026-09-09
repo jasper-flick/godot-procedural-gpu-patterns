@@ -1,6 +1,7 @@
 shader_type spatial;
 
 uniform uint hash_seed = 0u;
+uniform bool animation = true;
 uniform bool colored = true;
 uniform vec3 color_min : source_color = vec3(1.0, 0.0, 0.0);
 uniform vec3 color_mid : source_color = vec3(0.0);
@@ -14,11 +15,16 @@ uniform vec3 color_max : source_color = vec3(1.0);
 #include "res://shader_library/hasher.gdshaderinc"
 
 float animated_hash_to_float(Hasher h, float t) {
-	float t0 = floor(t);
-	float t1 = t0 + 1.0;
-	float v0 = hash_to_float(hash(hasher(h, t0)));
-	float v1 = hash_to_float(hash(hasher(h, t1)));
-	return mix(v0, v1, smoothstep(0.0, 1.0, t - t0));
+	if (animation) {
+		float t0 = floor(t);
+		float t1 = t0 + 1.0;
+		float v0 = hash_to_float(hash(hasher(h, t0)));
+		float v1 = hash_to_float(hash(hasher(h, t1)));
+		return mix(v0, v1, smoothstep(0.0, 1.0, t - t0));
+	}
+	else {
+		return hash_to_float((hash(h)));
+	}
 }
 
 PatternSample sample_value_noise(
