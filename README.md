@@ -14,6 +14,7 @@ Each Individual tutorial has its own numbered folder.
 4. [Hashing](https://catlikecoding.com/godot/procedural-gpu-patterns/04-hashing/)
 5. [Shader Library](https://catlikecoding.com/godot/procedural-gpu-patterns/05-shader-library/)
 6. [Animating Octaves](https://catlikecoding.com/godot/procedural-gpu-patterns/06-animating-octaves/)
+7. [value Noise](https://catlikecoding.com/godot/procedural-gpu-patterns/07-value-noise/)
 
 This is a work in progress. More parts will be added in due time.
 
