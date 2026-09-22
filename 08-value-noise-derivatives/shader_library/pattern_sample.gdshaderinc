@@ -35,6 +35,15 @@ PatternSample add(PatternSample a, PatternSample b) {
 	);
 }
 
+PatternSample subtract(PatternSample a, PatternSample b) {
+	return PatternSample(
+			a.v - b.v,
+			a.dx - b.dx,
+			a.dy - b.dy,
+			a.dz - b.dz
+	);
+}
+
 PatternSample multiply(PatternSample a, float b) {
 	return PatternSample(
 			a.v * b,
@@ -42,4 +51,17 @@ PatternSample multiply(PatternSample a, float b) {
 			a.dy * b,
 			a.dz * b
 	);
+}
+
+PatternSample multiply(PatternSample a, PatternSample b) {
+	return PatternSample(
+			a.v * b.v,
+			b.v * a.dx + a.v * b.dx,
+			b.v * a.dy + a.v * b.dy,
+			b.v * a.dz + a.v * b.dz
+	);
+}
+
+PatternSample blend(PatternSample a, PatternSample b, PatternSample t) {
+	return add(a, multiply(subtract(b, a), t));
 }
