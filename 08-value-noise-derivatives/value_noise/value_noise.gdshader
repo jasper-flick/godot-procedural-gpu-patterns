@@ -6,6 +6,8 @@ uniform bool colored = true;
 uniform vec3 color_min : source_color = vec3(1.0, 0.0, 0.0);
 uniform vec3 color_mid : source_color = vec3(0.0);
 uniform vec3 color_max : source_color = vec3(1.0);
+uniform float bumpiness = 1.0;
+uniform float displacement : hint_range(-1.0, 1.0) = 0.2;
 
 #define USE_STANDARD_FRACTAL_PATTERN_SETTINGS
 #define USE_FRACTAL_PATTERN_ANIMATION_SETTINGS
@@ -87,4 +89,12 @@ void fragment() {
 			TIME
 	);
 	ALBEDO = colorize(pattern_sample.v);
+	
+	vec2 d =
+			vec2(pattern_sample.dx, pattern_sample.dy) *
+			displacement * bumpiness;
+	NORMAL = cross(
+			TANGENT + NORMAL * d.x,
+			BINORMAL - NORMAL * d.y
+	);
 }
