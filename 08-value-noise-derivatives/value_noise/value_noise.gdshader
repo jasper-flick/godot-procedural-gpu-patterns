@@ -29,6 +29,18 @@ float animated_hash_to_float(Hasher h, float t) {
 	}
 }
 
+PatternSample blend(PatternSample a, PatternSample b, PatternSample t) {
+	PatternSample sample = zero_pattern_sample();
+	sample.v = mix(a.v, b.v, t.v);
+	return sample;
+}
+
+PatternSample value_sample(Hasher h, float time) {
+	PatternSample sample = zero_pattern_sample();
+	sample.v = animated_hash_to_float(h, time);
+	return sample;
+}
+
 PatternSample sample_value_noise(
 		int octave,
 		float frequency,
@@ -50,16 +62,20 @@ PatternSample sample_value_noise(
 	);
 	float timeA = time + time_stagger;
 	float timeB = time + (0.5 - time_stagger);
-	float v00 = animated_hash_to_float(h00, timeA);
-	float v10 = animated_hash_to_float(h10, timeB);
-	float v01 = animated_hash_to_float(h01, timeB);
-	float v11 = animated_hash_to_float(h11, timeA);
-	PatternSample s = zero_pattern_sample();
+	PatternSample v00 = value_sample(h00, timeA);
+	PatternSample v10 = value_sample(h10, timeB);
+	PatternSample v01 = value_sample(h01, timeB);
+	PatternSample v11 = value_sample(h11, timeA);
+	//PatternSample s = zero_pattern_sample();
 	vec2 t = smoothstep(0.0, 1.0, fractional_coordinates);
-	s.v = mix(
-			mix(v00, v10, t.x),
-			mix(v01, v11, t.x),
-			t.y
+	PatternSample tx = zero_pattern_sample();
+	tx.v = t.x;
+	PatternSample ty = zero_pattern_sample();
+	ty.v = t.y;
+	PatternSample s = blend(
+			blend(v00, v10, tx),
+			blend(v01, v11, tx),
+			ty
 	);
 	return s;
 }
