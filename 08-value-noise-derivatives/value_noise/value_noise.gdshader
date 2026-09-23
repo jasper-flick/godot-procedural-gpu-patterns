@@ -74,6 +74,8 @@ PatternSample sample_value_noise(
 			blend(v01, v11, tx),
 			ty
 	);
+	s.dx *= frequency;
+	s.dy *= frequency;
 	return s;
 }
 
