@@ -9,6 +9,7 @@ uniform vec3 color_max : source_color = vec3(1.0);
 uniform int smoothness : hint_enum("Step", "Linear", "Smooth", "Smoother") = 3;
 uniform float bumpiness = 1.0;
 uniform float displacement : hint_range(-1.0, 1.0) = 0.2;
+uniform bool vertex_displacement = true;
 
 #define USE_STANDARD_FRACTAL_PATTERN_SETTINGS
 #define USE_FRACTAL_PATTERN_ANIMATION_SETTINGS
@@ -97,6 +98,17 @@ vec3 colorize(float v) {
 	}
 	else {
 		return vec3(v);
+	}
+}
+
+void vertex() {
+	if (vertex_displacement) {
+		PatternSample pattern_sample = sample_fractal_pattern(
+				standard_fractal_pattern_settings(),
+				UV - 0.5,
+				TIME
+		);
+		VERTEX += NORMAL * (pattern_sample.v * displacement);
 	}
 }
 

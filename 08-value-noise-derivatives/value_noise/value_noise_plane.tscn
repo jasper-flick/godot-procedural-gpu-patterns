@@ -6,7 +6,7 @@
 render_priority = 0
 shader = ExtResource("1_py0ja")
 shader_parameter/hash_seed = 0
-shader_parameter/animation = false
+shader_parameter/animation = true
 shader_parameter/colored = true
 shader_parameter/color_min = Color(1, 0, 0, 1)
 shader_parameter/color_mid = Color(0, 0, 0, 1)
@@ -14,8 +14,9 @@ shader_parameter/color_max = Color(1, 1, 1, 1)
 shader_parameter/smoothness = 3
 shader_parameter/bumpiness = 0.5
 shader_parameter/displacement = 1.0
+shader_parameter/vertex_displacement = true
 shader_parameter/base_frequency = 8.0
-shader_parameter/octaves = 1
+shader_parameter/octaves = 3
 shader_parameter/lacunarity = 2.0
 shader_parameter/persistence = 0.5
 shader_parameter/base_animation = 1.0
@@ -23,8 +24,8 @@ shader_parameter/temporal_lacunarity = 2.0
 shader_parameter/adaptive_fractal_scale = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_r8t2q"]
-subdivide_width = 31
-subdivide_depth = 31
+subdivide_width = 63
+subdivide_depth = 63
 
 [node name="Node3D" type="Node3D" unique_id=1837617480]
 
