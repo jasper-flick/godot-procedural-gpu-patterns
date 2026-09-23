@@ -75,3 +75,14 @@ PatternSample smooth01(PatternSample t) {
 		d * t.dz
 	);
 }
+
+PatternSample smoother01(PatternSample t) {
+	PATTERN_SAMPLE_VALUE_TYPE d =
+			t.v * t.v * (t.v * (30.0 * t.v - 60.0) + 30.0);
+	return PatternSample(
+		t.v * t.v * t.v * (t.v * (6.0 * t.v - 15.0) + 10.0),
+		d * t.dx,
+		d * t.dy,
+		d * t.dz
+	);
+}
