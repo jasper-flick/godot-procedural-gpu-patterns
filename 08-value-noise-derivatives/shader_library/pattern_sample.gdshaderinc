@@ -65,3 +65,13 @@ PatternSample multiply(PatternSample a, PatternSample b) {
 PatternSample blend(PatternSample a, PatternSample b, PatternSample t) {
 	return add(a, multiply(subtract(b, a), t));
 }
+
+PatternSample smooth01(PatternSample t) {
+	PATTERN_SAMPLE_VALUE_TYPE d = (6.0 - 6.0 * t.v) * t.v;
+	return PatternSample(
+		smoothstep(0.0, 1.0, t.v),
+		d * t.dx,
+		d * t.dy,
+		d * t.dz
+	);
+}

@@ -66,9 +66,11 @@ PatternSample sample_value_noise(
 	PatternSample tx = zero_pattern_sample();
 	tx.v = t.x;
 	tx.dx = 1.0;
+	tx = smooth01(tx);
 	PatternSample ty = zero_pattern_sample();
 	ty.v = t.y;
 	ty.dy = 1.0;
+	ty = smooth01(ty);
 	PatternSample s = blend(
 			blend(v00, v10, tx),
 			blend(v01, v11, tx),
