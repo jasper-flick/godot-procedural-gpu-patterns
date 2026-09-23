@@ -6,6 +6,7 @@ uniform bool colored = true;
 uniform vec3 color_min : source_color = vec3(1.0, 0.0, 0.0);
 uniform vec3 color_mid : source_color = vec3(0.0);
 uniform vec3 color_max : source_color = vec3(1.0);
+uniform int smoothness : hint_enum("Step", "Linear", "Smooth", "Smoother") = 3;
 uniform float bumpiness = 1.0;
 uniform float displacement : hint_range(-1.0, 1.0) = 0.2;
 
@@ -66,11 +67,11 @@ PatternSample sample_value_noise(
 	PatternSample tx = zero_pattern_sample();
 	tx.v = t.x;
 	tx.dx = 1.0;
-	tx = smoother01(tx);
+	tx = smooth01(tx, smoothness);
 	PatternSample ty = zero_pattern_sample();
 	ty.v = t.y;
 	ty.dy = 1.0;
-	ty = smoother01(ty);
+	ty = smooth01(ty, smoothness);
 	PatternSample s = blend(
 			blend(v00, v10, tx),
 			blend(v01, v11, tx),

@@ -86,3 +86,16 @@ PatternSample smoother01(PatternSample t) {
 		d * t.dz
 	);
 }
+
+PatternSample smooth01(PatternSample t, int smoothness_type) {
+	switch(smoothness_type) {
+		case 1:
+			return t;
+		case 2:
+			return smooth01(t);
+		case 3:
+			return smoother01(t);
+		default:
+			return PatternSample(t.v < 0.5 ? 0.0 : 1.0, 0.0, 0.0, 0.0);
+	}
+}
