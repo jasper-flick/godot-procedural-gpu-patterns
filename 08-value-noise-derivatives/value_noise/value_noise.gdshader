@@ -63,8 +63,7 @@ PatternSample sample_value_noise(
 	PatternSample v01 = value_sample(h01, timeB);
 	PatternSample v11 = value_sample(h11, timeA);
 	
-	vec2 t = smoothstep(0.0, 1.0, fractional_coordinates);
-	t = fractional_coordinates;
+	vec2 t = fractional_coordinates;
 	PatternSample tx = zero_pattern_sample();
 	tx.v = t.x;
 	tx.dx = 1.0;
