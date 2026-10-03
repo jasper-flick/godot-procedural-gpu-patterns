@@ -4,10 +4,11 @@ uniform uint hash_seed = 0u;
 /**
 Seamlessly tile pattern for UV from 0 to 1.
 Requires integer frequencies for all octaves.
-Use even frequencies for best animation.
+Requires even frequencies for animation.
 */
 uniform bool tiling = false;
 uniform bool animation = true;
+uniform vec2 slide_velocity = vec2(0.0, 0.0);
 uniform bool colored = true;
 uniform vec3 color_min : source_color = vec3(1.0, 0.0, 0.0);
 uniform vec3 color_mid : source_color = vec3(0.0);
@@ -132,6 +133,13 @@ vec3 colorize(float v) {
 }
 
 PatternSample sample_noise(vec2 uv) {
+	if (animation) {
+		vec2 slide_offset = slide_velocity * TIME;
+		if (tiling) {
+			slide_offset = fract(slide_offset);
+		}
+		uv += slide_offset;
+	}
 	return sample_fractal_pattern(
 			standard_fractal_pattern_settings(),
 			uv,
