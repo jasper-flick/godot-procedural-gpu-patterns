@@ -101,23 +101,23 @@ vec3 colorize(float v) {
 	}
 }
 
+PatternSample sample_noise(vec2 uv) {
+	return sample_fractal_pattern(
+			standard_fractal_pattern_settings(),
+			uv * 3.0 - 1.0,
+			TIME
+	);
+}
+
 void vertex() {
 	if (vertex_displacement) {
-		PatternSample pattern_sample = sample_fractal_pattern(
-				standard_fractal_pattern_settings(),
-				UV - 0.5,
-				TIME
-		);
+		PatternSample pattern_sample = sample_noise(UV);
 		VERTEX += NORMAL * (pattern_sample.v * displacement);
 	}
 }
 
 void fragment() {
-	PatternSample pattern_sample = sample_fractal_pattern(
-			standard_fractal_pattern_settings(),
-			UV - 0.5,
-			TIME
-	);
+	PatternSample pattern_sample = sample_noise(UV);
 	ALBEDO = colorize(pattern_sample.v);
 	
 	vec2 d =
