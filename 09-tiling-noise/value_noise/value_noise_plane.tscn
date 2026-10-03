@@ -6,6 +6,7 @@
 render_priority = 0
 shader = ExtResource("1_py0ja")
 shader_parameter/hash_seed = 0
+shader_parameter/tiling = true
 shader_parameter/animation = false
 shader_parameter/colored = true
 shader_parameter/color_min = Color(1, 0, 0, 1)
@@ -15,7 +16,7 @@ shader_parameter/smoothness = 3
 shader_parameter/bumpiness = Vector2(0.5, 0.5)
 shader_parameter/displacement = 4.7499999933364734e-08
 shader_parameter/vertex_displacement = false
-shader_parameter/base_frequency = Vector2(4, 4)
+shader_parameter/base_frequency = Vector2(8, 8)
 shader_parameter/octaves = 1
 shader_parameter/lacunarity = 2.0
 shader_parameter/persistence = 0.5

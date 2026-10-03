@@ -1,6 +1,13 @@
 shader_type spatial;
 
 uniform uint hash_seed = 0u;
+
+/**
+Seamlessly tile pattern for UV from 0 to 1.
+Requires integer frequencies for all octaves.
+Use even frequencies for best animation.
+*/
+uniform bool tiling = false;
 uniform bool animation = true;
 uniform bool colored = true;
 uniform vec3 color_min : source_color = vec3(1.0, 0.0, 0.0);
@@ -38,6 +45,25 @@ PatternSample value_sample(Hasher h, float time) {
 	return sample;
 }
 
+vec2 lattice01(float lattice_coordinate, float frequency) {
+	float l0 = lattice_coordinate;
+	if (tiling) {
+		if (l0 < 0.0) {
+			l0 += frequency;
+		}
+		else if (l0 >= frequency) {
+			l0 -= frequency;
+		}
+	}
+	float l1 = l0 + 1.0;
+	if (tiling) {
+		if (l1 >= frequency) {
+			l1 -= frequency;
+		}
+	}
+	return vec2(l0, l1);
+}
+
 PatternSample sample_value_noise(
 		int octave,
 		vec2 frequency,
@@ -47,13 +73,17 @@ PatternSample sample_value_noise(
 	vec2 sample_coordinates = frequency * uv;
 	vec2 lattice_coordinates = floor(sample_coordinates);
 	vec2 fractional_coordinates = sample_coordinates - lattice_coordinates;
+	
+	vec2 uLattice = lattice01(lattice_coordinates.x, frequency.x);
+	vec2 vLattice = lattice01(lattice_coordinates.y, frequency.y);
+	
 	Hasher h = hasher(hash_seed + uint(octave));
-	Hasher h0 = hasher(h, lattice_coordinates.x);
-	Hasher h1 = hasher(h, lattice_coordinates.x + 1.0);
-	Hasher h00 = hasher(h0, lattice_coordinates.y);
-	Hasher h10 = hasher(h1, lattice_coordinates.y);
-	Hasher h01 = hasher(h0, lattice_coordinates.y + 1.0);
-	Hasher h11 = hasher(h1, lattice_coordinates.y + 1.0);
+	Hasher h0 = hasher(h, uLattice.x);
+	Hasher h1 = hasher(h, uLattice.y);
+	Hasher h00 = hasher(h0, vLattice.x);
+	Hasher h10 = hasher(h1, vLattice.x);
+	Hasher h01 = hasher(h0, vLattice.y);
+	Hasher h11 = hasher(h1, vLattice.y);
 	float time_stagger = fract(
 			(lattice_coordinates.x + lattice_coordinates.y) * 0.5
 	);
@@ -104,7 +134,7 @@ vec3 colorize(float v) {
 PatternSample sample_noise(vec2 uv) {
 	return sample_fractal_pattern(
 			standard_fractal_pattern_settings(),
-			uv * 3.0 - 1.0,
+			uv,
 			TIME
 	);
 }
