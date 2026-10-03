@@ -1,7 +1,6 @@
 shader_type spatial;
 
 uniform uint hash_seed = 0u;
-
 /**
 Seamlessly tile pattern for UV from 0 to 1.
 Requires integer frequencies for all octaves.
@@ -46,20 +45,23 @@ PatternSample value_sample(Hasher h, float time) {
 }
 
 vec2 lattice01(float lattice_coordinate, float frequency) {
-	float l0 = lattice_coordinate;
-	if (tiling) {
+	if (!tiling) {
+		return vec2(lattice_coordinate, lattice_coordinate + 1.0);
+	}
+	else {
+		float l0 = lattice_coordinate;
 		if (l0 < 0.0) {
 			l0 += frequency;
 		}
 		else if (l0 >= frequency) {
 			l0 -= frequency;
 		}
+		float l1 = l0 + 1.0;
+		if (l1 >= frequency) {
+			l1 -= frequency;
+		}
+		return vec2(l0, l1);
 	}
-	float l1 = l0 + 1.0;
-	if (tiling && l1 >= frequency) {
-		l1 -= frequency;
-	}
-	return vec2(l0, l1);
 }
 
 PatternSample sample_value_noise(
