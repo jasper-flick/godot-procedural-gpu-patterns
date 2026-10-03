@@ -7,10 +7,11 @@ uniform vec3 color_min : source_color = vec3(1.0, 0.0, 0.0);
 uniform vec3 color_mid : source_color = vec3(0.0);
 uniform vec3 color_max : source_color = vec3(1.0);
 uniform int smoothness : hint_enum("Step", "Linear", "Smooth", "Smoother") = 3;
-uniform float bumpiness = 1.0;
+uniform vec2 bumpiness = vec2(1.0);
 uniform float displacement : hint_range(-1.0, 1.0) = 0.2;
 uniform bool vertex_displacement = true;
 
+#define PATTERN_FREQUENCY_TYPE vec2
 #define USE_STANDARD_FRACTAL_PATTERN_SETTINGS
 #define USE_FRACTAL_PATTERN_ANIMATION_SETTINGS
 #include "res://shader_library/fractal_pattern_settings.gdshaderinc"
@@ -39,7 +40,7 @@ PatternSample value_sample(Hasher h, float time) {
 
 PatternSample sample_value_noise(
 		int octave,
-		float frequency,
+		vec2 frequency,
 		vec2 uv,
 		float time
 ) {
@@ -77,8 +78,8 @@ PatternSample sample_value_noise(
 			blend(v01, v11, tx),
 			ty
 	);
-	s.dx *= frequency;
-	s.dy *= frequency;
+	s.dx *= frequency.x;
+	s.dy *= frequency.y;
 	return s;
 }
 
