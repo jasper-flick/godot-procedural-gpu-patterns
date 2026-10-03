@@ -56,10 +56,8 @@ vec2 lattice01(float lattice_coordinate, float frequency) {
 		}
 	}
 	float l1 = l0 + 1.0;
-	if (tiling) {
-		if (l1 >= frequency) {
-			l1 -= frequency;
-		}
+	if (tiling && l1 >= frequency) {
+		l1 -= frequency;
 	}
 	return vec2(l0, l1);
 }
