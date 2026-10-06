@@ -3,6 +3,7 @@ shader_type spatial;
 uniform uint hash_seed = 0u;
 /**
 Seamlessly tile pattern for UV from 0 to 1.
+Tiling works for UV in between -1 and 2.
 Requires integer frequencies for all octaves.
 Requires even frequencies for animation.
 */
