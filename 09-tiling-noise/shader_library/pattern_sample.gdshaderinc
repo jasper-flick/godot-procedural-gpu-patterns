@@ -96,6 +96,8 @@ PatternSample smooth01(PatternSample t, int smoothness_type) {
 		case 3:
 			return smoother01(t);
 		default:
-			return PatternSample(t.v < 0.5 ? 0.0 : 1.0, 0.0, 0.0, 0.0);
+			PatternSample s = zero_pattern_sample();
+			s.v = step(PATTERN_SAMPLE_VALUE_TYPE(0.5), t.v);
+			return s;
 	}
 }
