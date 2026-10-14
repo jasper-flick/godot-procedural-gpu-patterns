@@ -141,11 +141,27 @@ PatternSample sample_noise(vec2 uv) {
 		}
 		uv += slide_offset;
 	}
-	return sample_fractal_pattern(
+	
+	PatternSample u = zero_pattern_sample();
+	u.v = uv.x + uv.y;
+	u.dx = 1.0;
+	u.dy = 1.0;
+	PatternSample v = zero_pattern_sample();
+	v.v = uv.y - uv.x;
+	v.dx = -1.0;
+	v.dy = 1.0;
+	
+	uv.x = u.v;
+	uv.y = v.v;
+	PatternSample s = sample_fractal_pattern(
 			standard_fractal_pattern_settings(),
 			uv,
 			TIME
 	);
+	float dx = s.dx;
+	s.dx = u.dx * dx + v.dx * s.dy;
+	s.dy = u.dy * dx + v.dy * s.dy;
+	return s;
 }
 
 void vertex() {
