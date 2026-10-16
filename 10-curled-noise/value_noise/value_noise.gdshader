@@ -142,14 +142,22 @@ PatternSample sample_noise(vec2 uv) {
 		uv += slide_offset;
 	}
 	
-	PatternSample u = zero_pattern_sample();
-	u.v = uv.x + uv.y;
-	u.dx = 1.0;
-	u.dy = 1.0;
-	PatternSample v = zero_pattern_sample();
-	v.v = uv.y - uv.x;
-	v.dx = -1.0;
-	v.dy = 1.0;
+	PatternSample u = sample_fractal_pattern(
+			standard_fractal_pattern_settings(),
+			uv,
+			TIME
+	);
+	u = multiply(u, 0.25);
+	u.v += uv.x;
+	u.dx += 1.0;
+	PatternSample v = sample_fractal_pattern(
+			standard_fractal_pattern_settings(),
+			uv,
+			TIME
+	);
+	v = multiply(v, 0.25);
+	v.v += uv.y;
+	v.dy += 1.0;
 	
 	uv.x = u.v;
 	uv.y = v.v;
