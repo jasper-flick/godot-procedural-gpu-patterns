@@ -17,6 +17,7 @@ uniform int smoothness : hint_enum("Step", "Linear", "Smooth", "Smoother") = 3;
 uniform vec2 bumpiness = vec2(1.0);
 uniform float displacement : hint_range(-1.0, 1.0) = 0.2;
 uniform bool vertex_displacement = true;
+uniform float offset_strength : hint_range(-1.0, 1.0) = 0.0;
 
 #define PATTERN_FREQUENCY_TYPE vec2
 #define USE_STANDARD_FRACTAL_PATTERN_SETTINGS
@@ -133,6 +134,16 @@ vec3 colorize(float v) {
 	}
 }
 
+void sample_vector_noise(vec2 uv, out PatternSample u, out PatternSample v) {
+	FractalPatternSettings warp_settings = standard_fractal_pattern_settings();
+	warp_settings.pattern_seed += 1u;
+	u = sample_fractal_pattern(warp_settings, uv, TIME);
+	u.v -= 0.5;
+	warp_settings.pattern_seed += 1u;
+	v = sample_fractal_pattern(warp_settings, uv, TIME);
+	v.v -= 0.5;
+}
+
 PatternSample sample_noise(vec2 uv) {
 	if (animation) {
 		vec2 slide_offset = slide_velocity * TIME;
@@ -142,15 +153,12 @@ PatternSample sample_noise(vec2 uv) {
 		uv += slide_offset;
 	}
 	
-	FractalPatternSettings warp_settings = standard_fractal_pattern_settings();
-	warp_settings.pattern_seed += 1u;
-	PatternSample u = sample_fractal_pattern(warp_settings, uv, TIME);
-	u = multiply(u, 0.25);
+	PatternSample u, v;
+	sample_vector_noise(uv, u, v);
+	u = multiply(u, offset_strength);
+	v = multiply(v, offset_strength);
 	u.v += uv.x;
 	u.dx += 1.0;
-	warp_settings.pattern_seed += 1u;
-	PatternSample v = sample_fractal_pattern(warp_settings, uv, TIME);
-	v = multiply(v, 0.25);
 	v.v += uv.y;
 	v.dy += 1.0;
 	
