@@ -17,7 +17,7 @@ uniform int smoothness : hint_enum("Step", "Linear", "Smooth", "Smoother") = 3;
 uniform vec2 bumpiness = vec2(1.0);
 uniform float displacement : hint_range(-1.0, 1.0) = 0.2;
 uniform bool vertex_displacement = true;
-uniform float offset_strength : hint_range(-1.0, 1.0) = 0.0;
+uniform float curl_strength : hint_range(-1.0, 1.0) = 0.0;
 
 #define PATTERN_FREQUENCY_TYPE vec2
 #define USE_STANDARD_FRACTAL_PATTERN_SETTINGS
@@ -135,13 +135,27 @@ vec3 colorize(float v) {
 }
 
 void sample_vector_noise(vec2 uv, out PatternSample u, out PatternSample v) {
-	FractalPatternSettings warp_settings = standard_fractal_pattern_settings();
-	warp_settings.pattern_seed += 1u;
-	u = sample_fractal_pattern(warp_settings, uv, TIME);
-	u.v -= 0.5;
-	warp_settings.pattern_seed += 1u;
-	v = sample_fractal_pattern(warp_settings, uv, TIME);
-	v.v -= 0.5;
+	FractalPatternSettings curl_settings = standard_fractal_pattern_settings();
+	curl_settings.pattern_seed += 1u;
+	PatternSample s = sample_fractal_pattern(curl_settings, uv, TIME);
+	u = zero_pattern_sample();
+	u.v = s.dy;
+	v = zero_pattern_sample();
+	v.v = -s.dx;
+	
+	float smoothness_normalization = 1.0;
+	switch (smoothness) {
+		case 2:
+			smoothness_normalization = 2.0 / 3.0;
+			break;
+		case 3:
+			smoothness_normalization = 8.0 / 15.0;
+			break;
+	}
+	vec2 scale = curl_strength * smoothness_normalization /
+			curl_settings.base_frequency;
+	u = multiply(u, scale.y);
+	v = multiply(v, scale.x);
 }
 
 PatternSample sample_noise(vec2 uv) {
@@ -155,8 +169,6 @@ PatternSample sample_noise(vec2 uv) {
 	
 	PatternSample u, v;
 	sample_vector_noise(uv, u, v);
-	u = multiply(u, offset_strength);
-	v = multiply(v, offset_strength);
 	u.v += uv.x;
 	u.dx += 1.0;
 	v.v += uv.y;
