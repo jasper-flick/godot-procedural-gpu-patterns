@@ -30,7 +30,13 @@ vec3 colorize(float v) {
 
 #include "res://shader_library/pattern_sample.gdshaderinc"
 
-PatternSample sample_pattern(int octave, vec2 frequency, vec2 uv, vec2 time) {
+PatternSample sample_pattern(
+		uint seed,
+		int octave,
+		vec2 frequency,
+		vec2 uv,
+		vec2 time
+) {
 	vec2 f = frequency * TAU;
 	vec2 t = f * (uv + time);
 	PatternSample s;

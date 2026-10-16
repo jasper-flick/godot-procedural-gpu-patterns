@@ -1,6 +1,5 @@
 shader_type spatial;
 
-uniform uint hash_seed = 0u;
 /**
 Seamlessly tile pattern for UV from 0 to 1.
 Tiling works for UV in between -1 and 2.
@@ -67,6 +66,7 @@ vec2 lattice01(float lattice_coordinate, float frequency) {
 }
 
 PatternSample sample_value_noise(
+		uint seed,
 		int octave,
 		vec2 frequency,
 		vec2 uv,
@@ -79,7 +79,7 @@ PatternSample sample_value_noise(
 	vec2 uLattice = lattice01(lattice_coordinates.x, frequency.x);
 	vec2 vLattice = lattice01(lattice_coordinates.y, frequency.y);
 	
-	Hasher h = hasher(hash_seed + uint(octave));
+	Hasher h = hasher(seed + uint(octave));
 	Hasher h0 = hasher(h, uLattice.x);
 	Hasher h1 = hasher(h, uLattice.y);
 	Hasher h00 = hasher(h0, vLattice.x);
@@ -142,19 +142,14 @@ PatternSample sample_noise(vec2 uv) {
 		uv += slide_offset;
 	}
 	
-	PatternSample u = sample_fractal_pattern(
-			standard_fractal_pattern_settings(),
-			uv,
-			TIME
-	);
+	FractalPatternSettings warp_settings = standard_fractal_pattern_settings();
+	warp_settings.pattern_seed += 1u;
+	PatternSample u = sample_fractal_pattern(warp_settings, uv, TIME);
 	u = multiply(u, 0.25);
 	u.v += uv.x;
 	u.dx += 1.0;
-	PatternSample v = sample_fractal_pattern(
-			standard_fractal_pattern_settings(),
-			uv,
-			TIME
-	);
+	warp_settings.pattern_seed += 1u;
+	PatternSample v = sample_fractal_pattern(warp_settings, uv, TIME);
 	v = multiply(v, 0.25);
 	v.v += uv.y;
 	v.dy += 1.0;

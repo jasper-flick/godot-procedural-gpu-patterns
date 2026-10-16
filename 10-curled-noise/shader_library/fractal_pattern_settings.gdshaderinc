@@ -2,6 +2,7 @@
 Declares the FractalPatternSettings struct used by fractal_pattern.gdshaderinc.
 
 The following settings are supported:
+- pattern_seed: The pattern seed value, potentially used for hashing.
 - base_frequency: Frequency of first octave (default 1.0 for all components).
 - octaves: The amount of octaves (default 1).
 - lacunarity: Frequency multiplier for successive octaves (default 2.0).
@@ -38,6 +39,7 @@ Otherwise the default_fractal_pattern_settings function is declared.
 #endif
 
 struct FractalPatternSettings {
+	uint pattern_seed;
 	PATTERN_FREQUENCY_TYPE base_frequency;
 	int octaves;
 	float lacunarity;
@@ -48,6 +50,7 @@ struct FractalPatternSettings {
 };
 
 #ifdef USE_STANDARD_FRACTAL_PATTERN_SETTINGS
+uniform uint pattern_seed = 0u;
 uniform PATTERN_FREQUENCY_TYPE base_frequency = PATTERN_FREQUENCY_TYPE(1.0);
 uniform int octaves : hint_range(1, 10) = 1;
 uniform float lacunarity : hint_range(1.0, 5.0, 0.1) = 2.0;
@@ -60,6 +63,7 @@ uniform bool adaptive_fractal_scale = false;
 
 FractalPatternSettings standard_fractal_pattern_settings() {
 	return FractalPatternSettings(
+			pattern_seed,
 			base_frequency,
 			octaves,
 			lacunarity,
@@ -77,6 +81,7 @@ FractalPatternSettings standard_fractal_pattern_settings() {
 #else
 FractalPatternSettings default_fractal_pattern_settings() {
 	FractalPatternSettings settings = FractalPatternSettings(
+			0u,
 			PATTERN_FREQUENCY_TYPE(1.0),
 			1,
 			2.0,
