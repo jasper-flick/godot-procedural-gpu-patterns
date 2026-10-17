@@ -18,6 +18,9 @@ uniform vec2 bumpiness = vec2(1.0);
 uniform float displacement : hint_range(-1.0, 1.0) = 0.2;
 uniform bool vertex_displacement = true;
 uniform float curl_strength : hint_range(-1.0, 1.0) = 0.0;
+uniform vec2 curl_frequency = vec2(1.0, 1.0);
+uniform int curl_octaves : hint_range(1, 3) = 1;
+uniform float curl_animation = 0.0;
 
 #define PATTERN_FREQUENCY_TYPE vec2
 #define USE_STANDARD_FRACTAL_PATTERN_SETTINGS
@@ -134,14 +137,13 @@ vec3 colorize(float v) {
 	}
 }
 
-void sample_vector_noise(vec2 uv, out PatternSample u, out PatternSample v) {
+void sample_curl_noise(vec2 uv, out PatternSample u, out PatternSample v) {
 	FractalPatternSettings curl_settings = standard_fractal_pattern_settings();
-	curl_settings.pattern_seed += 1u;
+	curl_settings.pattern_seed ^= 255u;
+	curl_settings.base_frequency = curl_frequency;
+	curl_settings.octaves = curl_octaves;
+	curl_settings.base_animation = curl_animation;
 	PatternSample s = sample_fractal_pattern(curl_settings, uv, TIME);
-	//u = zero_pattern_sample();
-	//u.v = s.dy;
-	//v = zero_pattern_sample();
-	//v.v = -s.dx;
 	float epsilon = 0.001;
 	PatternSample sx = sample_fractal_pattern(
 			curl_settings, uv + vec2(epsilon, 0.0), TIME
@@ -174,7 +176,7 @@ PatternSample sample_noise(vec2 uv) {
 	}
 	
 	PatternSample u, v;
-	sample_vector_noise(uv, u, v);
+	sample_curl_noise(uv, u, v);
 	u.v += uv.x;
 	u.dx += 1.0;
 	v.v += uv.y;
