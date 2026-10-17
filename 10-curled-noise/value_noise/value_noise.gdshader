@@ -167,11 +167,10 @@ void sample_vector_noise(vec2 uv, out PatternSample u, out PatternSample v) {
 
 PatternSample sample_noise(vec2 uv) {
 	if (animation) {
-		vec2 slide_offset = slide_velocity * TIME;
+		uv += slide_velocity * TIME;
 		if (tiling) {
-			slide_offset = fract(slide_offset);
+			uv = fract(uv);
 		}
-		uv += slide_offset;
 	}
 	
 	PatternSample u, v;
@@ -181,8 +180,10 @@ PatternSample sample_noise(vec2 uv) {
 	v.v += uv.y;
 	v.dy += 1.0;
 	
-	uv.x = u.v;
-	uv.y = v.v;
+	uv = vec2(u.v, v.v);
+	if (tiling) {
+		uv = fract(uv);
+	}
 	PatternSample s = sample_fractal_pattern(
 			standard_fractal_pattern_settings(),
 			uv,
