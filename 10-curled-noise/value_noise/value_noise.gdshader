@@ -138,10 +138,17 @@ void sample_vector_noise(vec2 uv, out PatternSample u, out PatternSample v) {
 	FractalPatternSettings curl_settings = standard_fractal_pattern_settings();
 	curl_settings.pattern_seed += 1u;
 	PatternSample s = sample_fractal_pattern(curl_settings, uv, TIME);
-	u = zero_pattern_sample();
-	u.v = s.dy;
-	v = zero_pattern_sample();
-	v.v = -s.dx;
+	//u = zero_pattern_sample();
+	//u.v = s.dy;
+	//v = zero_pattern_sample();
+	//v.v = -s.dx;
+	float epsilon = 0.001;
+	PatternSample sx = sample_fractal_pattern(
+			curl_settings, uv + vec2(epsilon, 0.0), TIME
+	);
+	PatternSample sy = sample_fractal_pattern(
+			curl_settings, uv + vec2(0.0, epsilon), TIME
+	);
 	
 	float smoothness_normalization = 1.0;
 	switch (smoothness) {
@@ -152,10 +159,10 @@ void sample_vector_noise(vec2 uv, out PatternSample u, out PatternSample v) {
 			smoothness_normalization = 8.0 / 15.0;
 			break;
 	}
-	vec2 scale = curl_strength * smoothness_normalization /
+	vec2 scale = curl_strength * smoothness_normalization / epsilon /
 			curl_settings.base_frequency;
-	u = multiply(u, scale.y);
-	v = multiply(v, scale.x);
+	u = multiply(subtract(sy, s), scale.y);
+	v = multiply(subtract(sx, s), -scale.x);
 }
 
 PatternSample sample_noise(vec2 uv) {
