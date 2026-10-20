@@ -28,8 +28,6 @@ shader_parameter/persistence = 0.5
 shader_parameter/base_animation = 0.25
 shader_parameter/temporal_lacunarity = 2.0
 shader_parameter/adaptive_fractal_scale = true
-shader_parameter/central_differencing = false
-shader_parameter/show_derivatives = false
 
 [sub_resource type="TorusMesh" id="TorusMesh_s46f0"]
 rings = 128

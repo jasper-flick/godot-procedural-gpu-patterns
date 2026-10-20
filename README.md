@@ -17,6 +17,7 @@ Each Individual tutorial has its own numbered folder.
 7. [Value Noise](https://catlikecoding.com/godot/procedural-gpu-patterns/07-value-noise/)
 8. [Value Noise Derivatives](https://catlikecoding.com/godot/procedural-gpu-patterns/08-value-noise-derivatives/)
 9. [Tiling Noise](https://catlikecoding.com/godot/procedural-gpu-patterns/09-tiling-noise/)
+10. [Curled Noise](https://catlikecoding.com/godot/procedural-gpu-patterns/10-curled-noise/)
 
 This is a work in progress. More parts will be added in due time.
 
