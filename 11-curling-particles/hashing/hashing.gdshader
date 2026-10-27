@@ -12,7 +12,13 @@ uniform bool staggered_animation = true;
 #include "res://shader_library/pattern_sample.gdshaderinc"
 #include "res://shader_library/hasher.gdshaderinc"
 
-PatternSample sample_hash(int octave, float frequency, vec2 uv, float time) {
+PatternSample sample_hash(
+		uint seed,
+		int octave,
+		float frequency,
+		vec2 uv,
+		float time
+) {
 	vec2 coordinates = floor(frequency * uv);
 	Hasher h = hasher(hash_seed + uint(octave));
 	h = hasher(h, coordinates.x);
