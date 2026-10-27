@@ -101,3 +101,38 @@ PatternSample smooth01(PatternSample t, int smoothness_type) {
 			return s;
 	}
 }
+
+PatternSample blend_square(
+		PatternSample s00,
+		PatternSample s10,
+		PatternSample s01,
+		PatternSample s11,
+		vec2 uv,
+		int smoothness_type
+) {
+	PatternSample u = zero_pattern_sample();
+	u.v = PATTERN_SAMPLE_VALUE_TYPE(uv.x);
+	u.dx = PATTERN_SAMPLE_VALUE_TYPE(1.0);
+	PatternSample v = zero_pattern_sample();
+	v.v = PATTERN_SAMPLE_VALUE_TYPE(uv.y);
+	v.dy = PATTERN_SAMPLE_VALUE_TYPE(1.0);
+
+	u = smooth01(u, smoothness_type);
+	v = smooth01(v, smoothness_type);
+	return blend(
+			blend(s00, s10, u),
+			blend(s01, s11, u),
+			v
+	);
+}
+
+PatternSample scale_derivatives(PatternSample s, vec3 scale) {
+	s.dx *= scale.x;
+	s.dy *= scale.y;
+	s.dz *= scale.z;
+	return s;
+}
+
+PatternSample scale_derivatives(PatternSample s, vec2 scale) {
+	return scale_derivatives(s, vec3(scale, 1.0));
+}

@@ -40,3 +40,16 @@ vec3 hash_to_vec3(uint hash) {
 			(hash >> 9u) & 0x007FE000u
 	) | uvec3(0x3F800000u)) - 1.0;
 }
+
+float animated_hash_to_float(Hasher h, float t, bool use_animation) {
+	if (use_animation) {
+		float t0 = floor(t);
+		float t1 = t0 + 1.0;
+		float v0 = hash_to_float(hash(hasher(h, t0)));
+		float v1 = hash_to_float(hash(hasher(h, t1)));
+		return mix(v0, v1, smoothstep(0.0, 1.0, t - t0));
+	}
+	else {
+		return hash_to_float((hash(h)));
+	}
+}

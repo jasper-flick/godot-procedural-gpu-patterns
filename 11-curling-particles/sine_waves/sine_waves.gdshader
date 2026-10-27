@@ -31,14 +31,17 @@ vec3 colorize(float v) {
 #include "res://shader_library/pattern_sample.gdshaderinc"
 
 PatternSample sample_pattern(
-		uint seed,
+		FractalPatternSettings settings,
 		int octave,
 		vec2 frequency,
 		vec2 uv,
 		vec2 time
 ) {
+	if (settings.pattern_animation) {
+		uv += time;
+	}
 	vec2 f = frequency * TAU;
-	vec2 t = f * (uv + time);
+	vec2 t = f * uv;
 	PatternSample s;
 	switch (function) {
 		case 0: // U

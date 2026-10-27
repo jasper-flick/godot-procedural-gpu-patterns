@@ -5,7 +5,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5faqg"]
 render_priority = 0
 shader = ExtResource("1_gj3uj")
-shader_parameter/hash_seed = 0
 shader_parameter/visualization = 2
 shader_parameter/staggered_animation = true
 shader_parameter/pattern_seed = 0
@@ -13,6 +12,7 @@ shader_parameter/base_frequency = 8.0
 shader_parameter/octaves = 3
 shader_parameter/lacunarity = 2.0
 shader_parameter/persistence = 0.5
+shader_parameter/pattern_animation = true
 shader_parameter/base_animation = 1.0
 shader_parameter/temporal_lacunarity = 2.0
 shader_parameter/adaptive_fractal_scale = true

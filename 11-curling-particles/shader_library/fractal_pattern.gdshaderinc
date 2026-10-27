@@ -13,7 +13,7 @@ The default is vec2. Other options are float, vec3, vec4.
 Define SAMPLE_PATTERN_FUNCTION to set the function for sampling an octave.
 Only define the function name, without parameter list.
 The matching function declaration must have three parameters:
-- uint for the pattern seed.
+- FractalPatternSettings for the pattern settings.
 - int for the octave's index.
 - PATTERN_FREQUENCY_TYPE for the octave's sample frequency.
 - SAMPLE_PATTERN_COORDINATES_TYPE for the sample coordinates.
@@ -33,7 +33,7 @@ For example, float for a uniform frequency and vec2 for 2D sample coordinates.
 #define SAMPLE_PATTERN_FUNCTION dummy_sample_pattern
 
 PatternSample dummy_sample_pattern(
-		uint pattern_seed,
+		FractalPatternSettings settings,
 		int octave,
 		PATTERN_FREQUENCY_TYPE frequency,
 		SAMPLE_PATTERN_COORDINATES_TYPE coordinates,
@@ -65,8 +65,7 @@ PatternSample sample_fractal_pattern(
 	float amplitude = 1.0;
 	for (int i = 0; i < settings.octaves; i++) {
 		PatternSample sample = SAMPLE_PATTERN_FUNCTION(
-				settings.pattern_seed,
-				i, frequency, coordinates, animation_offset
+				settings, i, frequency, coordinates, animation_offset
 		);
 		sum = add(sum, multiply(sample, amplitude));
 		frequency *= settings.lacunarity;

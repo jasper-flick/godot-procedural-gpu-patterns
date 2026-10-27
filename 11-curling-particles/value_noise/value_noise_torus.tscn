@@ -5,14 +5,11 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dpar4"]
 render_priority = 0
 shader = ExtResource("1_mh8hg")
-shader_parameter/tiling = true
-shader_parameter/animation = true
 shader_parameter/slide_velocity = Vector2(0.05, 0.1)
 shader_parameter/colored = true
 shader_parameter/color_min = Color(1, 0, 0, 1)
 shader_parameter/color_mid = Color(0, 0, 0, 1)
 shader_parameter/color_max = Color(1, 1, 1, 1)
-shader_parameter/smoothness = 3
 shader_parameter/bumpiness = Vector2(0.212, 0.637)
 shader_parameter/displacement = 0.25000005937500003
 shader_parameter/vertex_displacement = true
@@ -25,8 +22,11 @@ shader_parameter/base_frequency = Vector2(6, 4)
 shader_parameter/octaves = 3
 shader_parameter/lacunarity = 2.0
 shader_parameter/persistence = 0.5
+shader_parameter/pattern_animation = true
 shader_parameter/base_animation = 0.25
 shader_parameter/temporal_lacunarity = 2.0
+shader_parameter/pattern_smoothness = 3
+shader_parameter/pattern_tiling = true
 shader_parameter/adaptive_fractal_scale = true
 
 [sub_resource type="TorusMesh" id="TorusMesh_s46f0"]
