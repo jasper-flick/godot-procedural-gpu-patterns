@@ -15,6 +15,10 @@ The following settings are supported:
 - adaptive_fractal_scale: How to scale the total amplitude (default false):
   - true: Based on actual octaves.
   - false: Based on infinite octaves.
+- curl_strength: strength of curl deformation.
+- curl_animation: Equivalent of pattern_animation for curl.
+- curl_frequency: Equivalent of base_frequency for curl.
+- curl_octaves: Equivalent of octaves for curl.
 
 Define PATTERN_FREQUENCY_TYPE to set the type of base_frequency.
 The default is float. Other options are float2, float3, float4.
@@ -24,6 +28,9 @@ base_animation and temporal_lacunarity.
 The default is float. Other options are float2, float3, float4.
 It must either be float or match the frequency type.
 For example, float for a uniform animation and vec2 for separate 2D frequencies.
+
+Define USE_PATTERN_CURL to:
+- Declare uniform variables for the curl settings.
 
 Define USE_STANDARD_FRACTAL_PATTERN_SETTINGS to declare:
 - Uniform variables for the default fractal pattern settings.
@@ -62,6 +69,10 @@ struct FractalPatternSettings {
 	int pattern_smoothness;
 	bool pattern_tiling;
 	bool adaptive_fractal_scale;
+	float curl_strength;
+	float curl_animation;
+	PATTERN_FREQUENCY_TYPE curl_frequency;
+	int curl_octaves;
 };
 
 #ifdef USE_STANDARD_FRACTAL_PATTERN_SETTINGS
@@ -89,6 +100,13 @@ uniform bool pattern_tiling = false;
 #endif
 uniform bool adaptive_fractal_scale = true;
 
+uniform float curl_strength : hint_range(-1.0, 1.0) = 0.0;
+#ifdef USE_FRACTAL_PATTERN_ANIMATION_SETTINGS
+uniform float curl_animation = 0.0;
+#endif
+uniform PATTERN_FREQUENCY_TYPE curl_frequency = PATTERN_FREQUENCY_TYPE(1.0);
+uniform int curl_octaves : hint_range(1, 3) = 1;
+
 FractalPatternSettings standard_fractal_pattern_settings() {
 	return FractalPatternSettings(
 			pattern_seed,
@@ -115,7 +133,15 @@ FractalPatternSettings standard_fractal_pattern_settings() {
 #else
 			false,
 #endif
-			adaptive_fractal_scale
+			adaptive_fractal_scale,
+			curl_strength,
+#ifdef USE_FRACTAL_PATTERN_ANIMATION_SETTINGS
+			curl_animation,
+#else
+			0.0,
+#endif
+			curl_frequency,
+			curl_octaves
 	);
 }
 #else
@@ -131,7 +157,11 @@ FractalPatternSettings default_fractal_pattern_settings() {
 			PATTERN_ANIMATION_TYPE(2.0),
 			0,
 			false,
-			false
+			false,
+			0.0,
+			0.0,
+			PATTERN_FREQUENCY_TYPE(1.0),
+			1
 	);
 	return settings;
 }

@@ -8,10 +8,6 @@ uniform vec3 color_max : source_color = vec3(1.0);
 uniform vec2 bumpiness = vec2(1.0);
 uniform float displacement : hint_range(-1.0, 1.0) = 0.2;
 uniform bool vertex_displacement = true;
-uniform float curl_strength : hint_range(-1.0, 1.0) = 0.0;
-uniform vec2 curl_frequency = vec2(1.0, 1.0);
-uniform int curl_octaves : hint_range(1, 3) = 1;
-uniform float curl_animation = 0.0;
 
 #define PATTERN_FREQUENCY_TYPE vec2
 #define USE_STANDARD_FRACTAL_PATTERN_SETTINGS

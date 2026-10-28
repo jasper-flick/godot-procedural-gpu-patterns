@@ -13,10 +13,6 @@ shader_parameter/color_max = Color(1, 1, 1, 1)
 shader_parameter/bumpiness = Vector2(0.212, 0.637)
 shader_parameter/displacement = 0.25000005937500003
 shader_parameter/vertex_displacement = true
-shader_parameter/curl_strength = 0.25000005937500003
-shader_parameter/curl_frequency = Vector2(4, 2)
-shader_parameter/curl_octaves = 2
-shader_parameter/curl_animation = 1.0
 shader_parameter/pattern_seed = 0
 shader_parameter/base_frequency = Vector2(6, 4)
 shader_parameter/octaves = 3
@@ -28,6 +24,10 @@ shader_parameter/temporal_lacunarity = 2.0
 shader_parameter/pattern_smoothness = 3
 shader_parameter/pattern_tiling = true
 shader_parameter/adaptive_fractal_scale = true
+shader_parameter/curl_strength = 0.25000005937500003
+shader_parameter/curl_animation = 1.0
+shader_parameter/curl_frequency = Vector2(4, 2)
+shader_parameter/curl_octaves = 2
 
 [sub_resource type="TorusMesh" id="TorusMesh_s46f0"]
 rings = 128
