@@ -1,5 +1,9 @@
 #include "res://shader_library/hasher.gdshaderinc"
 
+#ifndef PATTERN_FREQUENCY_TYPE
+#define PATTERN_FREQUENCY_TYPE float
+#endif
+
 vec2 lattice01(float lattice_coordinate, float frequency, bool use_tiling) {
 	if (!use_tiling) {
 		return vec2(lattice_coordinate, lattice_coordinate + 1.0);
@@ -29,17 +33,18 @@ struct LatticeSquare {
 LatticeSquare get_lattice_square(
 		uint seed,
 		vec2 uv,
-		vec2 frequency,
+		PATTERN_FREQUENCY_TYPE frequency,
 		float time,
 		bool use_tiling
 ) {
 	LatticeSquare s;
-	vec2 sample_coordinates = frequency * uv;
+	vec2 f = vec2(frequency);
+	vec2 sample_coordinates = f * uv;
 	vec2 lattice_coordinates = floor(sample_coordinates);
 	s.uv = sample_coordinates - lattice_coordinates;
 	
-	vec2 uLattice = lattice01(lattice_coordinates.x, frequency.x, use_tiling);
-	vec2 vLattice = lattice01(lattice_coordinates.y, frequency.y, use_tiling);
+	vec2 uLattice = lattice01(lattice_coordinates.x, f.x, use_tiling);
+	vec2 vLattice = lattice01(lattice_coordinates.y, f.y, use_tiling);
 	
 	Hasher h = hasher(seed);
 	Hasher h0 = hasher(h, uLattice.x);
