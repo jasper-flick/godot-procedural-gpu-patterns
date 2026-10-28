@@ -18,6 +18,7 @@ uniform bool vertex_displacement = true;
 
 #define SAMPLE_PATTERN_FUNCTION sample_square_value_noise
 #include "res://shader_library/fractal_pattern.gdshaderinc"
+#include "res://shader_library/fractal_curl.gdshaderinc"
 
 vec3 colorize(float v) {
 	if (colored) {
@@ -34,36 +35,6 @@ vec3 colorize(float v) {
 	}
 }
 
-void sample_curl_noise(vec2 uv, out PatternSample u, out PatternSample v) {
-	FractalPatternSettings curl_settings = standard_fractal_pattern_settings();
-	curl_settings.pattern_seed ^= 255u;
-	curl_settings.base_frequency = curl_frequency;
-	curl_settings.octaves = curl_octaves;
-	curl_settings.base_animation = curl_animation;
-	PatternSample s = sample_fractal_pattern(curl_settings, uv, TIME);
-	float epsilon = 0.001;
-	PatternSample sx = sample_fractal_pattern(
-			curl_settings, uv + vec2(epsilon, 0.0), TIME
-	);
-	PatternSample sy = sample_fractal_pattern(
-			curl_settings, uv + vec2(0.0, epsilon), TIME
-	);
-	
-	float smoothness_normalization = 1.0;
-	switch (curl_settings.pattern_smoothness) {
-		case 2:
-			smoothness_normalization = 2.0 / 3.0;
-			break;
-		case 3:
-			smoothness_normalization = 8.0 / 15.0;
-			break;
-	}
-	vec2 scale = curl_strength * smoothness_normalization / epsilon /
-			curl_settings.base_frequency;
-	u = multiply(subtract(sy, s), scale.y);
-	v = multiply(subtract(sx, s), -scale.x);
-}
-
 PatternSample sample_noise(vec2 uv) {
 	FractalPatternSettings settings = standard_fractal_pattern_settings();
 	if (settings.pattern_animation) {
@@ -74,7 +45,7 @@ PatternSample sample_noise(vec2 uv) {
 	}
 	
 	PatternSample u, v;
-	sample_curl_noise(uv, u, v);
+	sample_fractal_curl(settings, uv, TIME, u, v);
 	u.v += uv.x;
 	u.dx += 1.0;
 	v.v += uv.y;
