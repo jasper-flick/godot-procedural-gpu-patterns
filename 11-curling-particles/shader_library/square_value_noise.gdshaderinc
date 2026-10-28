@@ -1,4 +1,3 @@
-#define PATTERN_FREQUENCY_TYPE vec2
 #include "res://shader_library/fractal_pattern_settings.gdshaderinc"
 #include "res://shader_library/pattern_sample.gdshaderinc"
 #include "res://shader_library/lattice_hasing.gdshaderinc"
@@ -12,7 +11,7 @@ PatternSample value_sample(Hasher h, float time, bool use_animation) {
 PatternSample sample_square_value_noise(
 		FractalPatternSettings settings,
 		int octave,
-		vec2 frequency,
+		PATTERN_FREQUENCY_TYPE frequency,
 		vec2 uv,
 		float time
 ) {

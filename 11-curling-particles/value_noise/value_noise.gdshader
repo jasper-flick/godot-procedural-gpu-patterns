@@ -13,6 +13,7 @@ uniform vec2 curl_frequency = vec2(1.0, 1.0);
 uniform int curl_octaves : hint_range(1, 3) = 1;
 uniform float curl_animation = 0.0;
 
+#define PATTERN_FREQUENCY_TYPE vec2
 #define USE_STANDARD_FRACTAL_PATTERN_SETTINGS
 #define USE_FRACTAL_PATTERN_ANIMATION_SETTINGS
 #define USE_FRACTAL_PATTERN_SMOOTNESS_SETTING

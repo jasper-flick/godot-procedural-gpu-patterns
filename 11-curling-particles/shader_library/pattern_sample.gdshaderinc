@@ -136,3 +136,7 @@ PatternSample scale_derivatives(PatternSample s, vec3 scale) {
 PatternSample scale_derivatives(PatternSample s, vec2 scale) {
 	return scale_derivatives(s, vec3(scale, 1.0));
 }
+
+PatternSample scale_derivatives(PatternSample s, float scale) {
+	return scale_derivatives(s, vec2(scale, 1.0));
+}
