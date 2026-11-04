@@ -1,8 +1,7 @@
+/*
+Lattice hasing functions for 2D lattice noise, like square value noise.
+*/
 #include "res://shader_library/hasher.gdshaderinc"
-
-#ifndef PATTERN_FREQUENCY_TYPE
-#define PATTERN_FREQUENCY_TYPE float
-#endif
 
 vec2 lattice01(float lattice_coordinate, float frequency, bool use_tiling) {
 	if (!use_tiling) {
@@ -33,7 +32,7 @@ struct LatticeSquare {
 LatticeSquare get_lattice_square(
 		uint seed,
 		vec2 uv,
-		PATTERN_FREQUENCY_TYPE frequency,
+		vec2 frequency,
 		float time,
 		bool use_tiling
 ) {

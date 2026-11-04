@@ -1,6 +1,5 @@
 shader_type spatial;
 
-uniform vec2 slide_velocity = vec2(0.0, 0.0);
 uniform bool colored = true;
 uniform vec3 color_min : source_color = vec3(1.0, 0.0, 0.0);
 uniform vec3 color_mid : source_color = vec3(0.0);
@@ -9,16 +8,11 @@ uniform vec2 bumpiness = vec2(1.0);
 uniform float displacement : hint_range(-1.0, 1.0) = 0.2;
 uniform bool vertex_displacement = true;
 
-#define PATTERN_FREQUENCY_TYPE vec2
+#define USE_FRACTAL_PATTERN_CURL
 #define USE_STANDARD_FRACTAL_PATTERN_SETTINGS
-#define USE_FRACTAL_PATTERN_ANIMATION_SETTINGS
-#define USE_FRACTAL_PATTERN_SMOOTNESS_SETTING
-#define USE_FRACTAL_PATTERN_TILING_SETTING
-#include "res://shader_library/square_value_noise.gdshaderinc"
-
 #define SAMPLE_PATTERN_FUNCTION sample_square_value_noise
+#include "res://shader_library/square_value_noise.gdshaderinc"
 #include "res://shader_library/fractal_pattern.gdshaderinc"
-#include "res://shader_library/fractal_curl.gdshaderinc"
 
 vec3 colorize(float v) {
 	if (colored) {
@@ -37,29 +31,7 @@ vec3 colorize(float v) {
 
 PatternSample sample_noise(vec2 uv) {
 	FractalPatternSettings settings = standard_fractal_pattern_settings();
-	if (settings.pattern_animation) {
-		uv += slide_velocity * TIME;
-		if (settings.pattern_tiling) {
-			uv = fract(uv);
-		}
-	}
-	
-	PatternSample u, v;
-	sample_fractal_curl(settings, uv, TIME, u, v);
-	u.v += uv.x;
-	u.dx += 1.0;
-	v.v += uv.y;
-	v.dy += 1.0;
-	
-	uv = vec2(u.v, v.v);
-	if (settings.pattern_tiling) {
-		uv = fract(uv);
-	}
-	PatternSample s = sample_fractal_pattern(settings, uv, TIME);
-	float dx = s.dx;
-	s.dx = u.dx * dx + v.dx * s.dy;
-	s.dy = u.dy * dx + v.dy * s.dy;
-	return s;
+	return sample_fractal(settings, uv, TIME);
 }
 
 void vertex() {

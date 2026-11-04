@@ -41,15 +41,41 @@ vec3 hash_to_vec3(uint hash) {
 	) | uvec3(0x3F800000u)) - 1.0;
 }
 
-float animated_hash_to_float(Hasher h, float t, bool use_animation) {
-	if (use_animation) {
-		float t0 = floor(t);
-		float t1 = t0 + 1.0;
-		float v0 = hash_to_float(hash(hasher(h, t0)));
-		float v1 = hash_to_float(hash(hasher(h, t1)));
-		return mix(v0, v1, smoothstep(0.0, 1.0, t - t0));
-	}
-	else {
-		return hash_to_float((hash(h)));
-	}
-}
+//float animated_hash_to_float(Hasher h, float t, bool use_animation) {
+	//if (use_animation) {
+		//float t0 = floor(t);
+		//float t1 = t0 + 1.0;
+		//float v0 = hash_to_float(hash(hasher(h, t0)));
+		//float v1 = hash_to_float(hash(hasher(h, t1)));
+		//return mix(v0, v1, smoothstep(0.0, 1.0, t - t0));
+	//}
+	//else {
+		//return hash_to_float((hash(h)));
+	//}
+//}
+//
+//vec2 animated_hash_to_vec2(Hasher h, float t, bool use_animation) {
+	//if (use_animation) {
+		//float t0 = floor(t);
+		//float t1 = t0 + 1.0;
+		//vec2 v0 = hash_to_vec2(hash(hasher(h, t0)));
+		//vec2 v1 = hash_to_vec2(hash(hasher(h, t1)));
+		//return mix(v0, v1, smoothstep(0.0, 1.0, t - t0));
+	//}
+	//else {
+		//return hash_to_vec2((hash(h)));
+	//}
+//}
+//
+//vec3 animated_hash_to_vec3(Hasher h, float t, bool use_animation) {
+	//if (use_animation) {
+		//float t0 = floor(t);
+		//float t1 = t0 + 1.0;
+		//vec3 v0 = hash_to_vec3(hash(hasher(h, t0)));
+		//vec3 v1 = hash_to_vec3(hash(hasher(h, t1)));
+		//return mix(v0, v1, smoothstep(0.0, 1.0, t - t0));
+	//}
+	//else {
+		//return hash_to_vec3((hash(h)));
+	//}
+//}
