@@ -2,8 +2,8 @@
 Declares the PatternSample struct used by fractal_pattern.gdshaderinc.
 
 Define PATTERN_SAMPLE_DIMENSIONS to set the value dimensions.
-Allowed values are 1, 2, 3, and 4. The default is 1.
-The corresponding coordinate types are float, vec2, vec3, and vec4.
+Allowed values are 1, 2, and 3. The default is 1.
+The corresponding coordinate types are float, vec2, and vec3.
 The value field is named v.
 
 Up to three derivatives are supported, with the same type as the value.
@@ -19,10 +19,8 @@ The derivative fields are named dx, dy, dz.
 #define PATTERN_SAMPLE_VALUE_TYPE float
 #elif PATTERN_SAMPLE_DIMENSIONS == 2
 #define PATTERN_SAMPLE_VALUE_TYPE vec2
-#elif PATTERN_SAMPLE_DIMENSIONS == 3
-#define PATTERN_SAMPLE_VALUE_TYPE vec3
 #else
-#define PATTERN_SAMPLE_VALUE_TYPE vec4
+#define PATTERN_SAMPLE_VALUE_TYPE vec3
 #endif
 
 struct PatternSample {
@@ -146,7 +144,7 @@ PatternSample scale_derivatives(PatternSample s, vec3 scale) {
 }
 
 PatternSample scale_derivatives(PatternSample s, vec2 scale) {
-	return scale_derivatives(s, vec3(scale, 1.0));
+	return scale_derivatives(s, vec3(scale, 0.0));
 }
 
 PATTERN_SAMPLE_VALUE_TYPE hasher_to_value(Hasher h) {
@@ -154,10 +152,8 @@ PATTERN_SAMPLE_VALUE_TYPE hasher_to_value(Hasher h) {
 	return hash_to_float(hash(h));
 #elif PATTERN_SAMPLE_DIMENSIONS == 2
 	return hash_to_vec2(hash(h));
-#elif PATTERN_SAMPLE_DIMENSIONS == 3
-	return hash_to_vec3(hash(h));
 #else
-	return hash_to_vec4(hash(h));
+	return hash_to_vec3(hash(h));
 #endif
 }
 

@@ -20,8 +20,7 @@ PatternSample sample_square_value_noise(
 		float time
 ) {
 	LatticeSquare square = get_lattice_square(
-			settings.seed + uint(octave),
-			uv, frequency, time, settings.tiling
+			settings.seed + uint(octave), uv, frequency, time, settings.tiling
 	);
 	PatternSample s = blend_square(
 			value_sample(square.h00, square.time_a, settings.animation),

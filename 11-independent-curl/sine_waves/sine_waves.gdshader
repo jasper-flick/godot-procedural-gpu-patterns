@@ -8,8 +8,8 @@ uniform bool colors_per_vertex = false;
 uniform bool derivatives_per_vertex = false;
 uniform bool vertex_displacement = true;
 
-#define USE_STANDARD_FRACTAL_PATTERN_SETTINGS
 #define USE_FRACTAL_PATTERN_CURL
+#define USE_STANDARD_FRACTAL_PATTERN_SETTINGS
 #include "res://shader_library/fractal_pattern_settings.gdshaderinc"
 
 varying vec2 derivatives;

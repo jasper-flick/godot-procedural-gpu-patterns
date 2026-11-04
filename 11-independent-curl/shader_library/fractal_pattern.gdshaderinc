@@ -18,7 +18,7 @@ The matching function declaration must have three parameters:
 - float for the octave's animation offset.
 
 Curl requires PATTERN_DIMENSIONS to be 2.
-Curl is based on the first pattern sample's value compoment.
+Curl is based on the first pattern sample's value component.
 
 Define SAMPLE_CURL_FUNCTION for curl as for SAMPLE_PATTERN_FUNCTION.
 By default it is the same as SAMPLE_PATTERN_FUNCTION.
@@ -43,7 +43,6 @@ PatternSample dummy_sample_pattern(
 #ifndef SAMPLE_CURL_FUNCTION
 #define SAMPLE_CURL_FUNCTION SAMPLE_PATTERN_FUNCTION
 #endif
-
 
 PatternSample normalize_fractal_sample(
 		FractalSettings settings,
