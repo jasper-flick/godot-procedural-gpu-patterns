@@ -7,9 +7,9 @@ FractalPatternSettings struct has the following settings:
 - animation: Whether the  whole pattern animates (default false).
 - sliding: Whether the whole pattern slides (default false).
 - slide_velocity: How fast the pattern slides (default 1.0).
-- pattern: FractalSettings for the main pattern.
 - curl_enabled: Whether the main pattern is curled (default false).
 - curl_strength: How much curl is applied (default 0.0).
+- pattern: FractalSettings for the main pattern.
 - curl: FractalSettings for the curl pattern.
 
 The FractalSettings struct has the following settings:
@@ -31,7 +31,9 @@ The corresponding coordinate and frequency types are vec2 and vec3.
 Define USE_FRACTAL_PATTERN_CURL to indicate that curl is supported.
 Curl requires PATTERN_DIMENSIONS to be 2.
 
-Define USE_STANDARD_FRACTAL_PATTERN_SETTINGS for standard uniform variables.
+Define USE_STANDARD_FRACTAL_PATTERN_SETTINGS for:
+- Uniform variables to configure the fractal pattern.
+- The standard_fractal_pattern_settings function to get the matching settings.
 */
 #ifndef PATTERN_DIMENSIONS
 #define PATTERN_DIMENSIONS 2
@@ -60,10 +62,9 @@ struct FractalPatternSettings {
 	bool animation;
 	bool sliding;
 	PATTERN_DIMENSION_TYPE slide_velocity;
-	
-	FractalSettings pattern;
 	bool curl_enabled;
 	float curl_strength;
+	FractalSettings pattern;
 	FractalSettings curl;
 };
 
