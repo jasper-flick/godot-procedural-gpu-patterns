@@ -44,8 +44,8 @@ PatternSample sample_hash(
 }
 
 #define SAMPLE_PATTERN_FUNCTION sample_hash
-#include "res://shader_library/square_value_noise.gdshaderinc"
-#define SAMPLE_CURL_FUNCTION sample_square_value_noise
+#include "res://shader_library/square_blended_value_noise.gdshaderinc"
+#define SAMPLE_CURL_FUNCTION sample_square_blended_value_noise
 #include "res://shader_library/fractal_pattern.gdshaderinc"
 
 void fragment() {

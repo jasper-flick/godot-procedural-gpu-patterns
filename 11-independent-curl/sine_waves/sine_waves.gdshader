@@ -67,16 +67,16 @@ PatternSample sample_pattern(
 }
 
 #define SAMPLE_PATTERN_FUNCTION sample_pattern
-#include "res://shader_library/square_value_noise.gdshaderinc"
-#define SAMPLE_CURL_FUNCTION sample_square_value_noise
+#include "res://shader_library/square_blended_value_noise.gdshaderinc"
+#define SAMPLE_CURL_FUNCTION sample_square_blended_value_noise
 #include "res://shader_library/fractal_pattern.gdshaderinc"
 
+PatternSample sample_waves(vec2 uv) {
+	return sample_fractal(standard_fractal_pattern_settings(), uv, TIME);
+}
+
 void vertex() {
-	PatternSample pattern_sample = sample_fractal(
-			standard_fractal_pattern_settings(),
-			UV,
-			TIME
-	);
+	PatternSample pattern_sample = sample_waves(UV);
 	if (colors_per_vertex) {
 		COLOR.rgb = colorize(pattern_sample.v);
 	}
@@ -91,11 +91,7 @@ void vertex() {
 }
 
 void fragment() {
-	PatternSample pattern_sample = sample_fractal(
-			standard_fractal_pattern_settings(),
-			UV,
-			TIME
-	);
+	PatternSample pattern_sample = sample_waves(UV);
 	if (colors_per_vertex) {
 		ALBEDO = COLOR.rgb;
 	}

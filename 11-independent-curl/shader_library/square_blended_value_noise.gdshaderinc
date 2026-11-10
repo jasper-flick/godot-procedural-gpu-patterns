@@ -12,7 +12,7 @@ PatternSample value_sample(Hasher h, float time, bool use_animation) {
 	return hasher_to_value_sample(h, time, use_animation);
 }
 
-PatternSample sample_square_value_noise(
+PatternSample sample_square_blended_value_noise(
 		FractalPatternSettings settings,
 		int octave,
 		vec2 frequency,
@@ -28,7 +28,7 @@ PatternSample sample_square_value_noise(
 			value_sample(square.h01, square.time_b, settings.animation),
 			value_sample(square.h11, square.time_a, settings.animation),
 			square.uv,
-			settings.pattern.smoothness
+			settings.main.smoothness
 	);
 	return scale_derivatives(s, frequency);
 }

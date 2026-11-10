@@ -9,7 +9,7 @@ FractalPatternSettings struct has the following settings:
 - slide_velocity: How fast the pattern slides (default 1.0).
 - curl_enabled: Whether the main pattern is curled (default false).
 - curl_strength: How much curl is applied (default 0.0).
-- pattern: FractalSettings for the main pattern.
+- main: FractalSettings for the main pattern.
 - curl: FractalSettings for the curl pattern.
 
 The FractalSettings struct has the following settings:
@@ -64,7 +64,7 @@ struct FractalPatternSettings {
 	PATTERN_DIMENSION_TYPE slide_velocity;
 	bool curl_enabled;
 	float curl_strength;
-	FractalSettings pattern;
+	FractalSettings main;
 	FractalSettings curl;
 };
 
@@ -78,16 +78,16 @@ FractalPatternSettings default_fractal_pattern_settings() {
 	s.curl_enabled = false;
 	s.curl_strength = 0.0;
 	
-	s.pattern.base_frequency = PATTERN_DIMENSION_TYPE(1.0);
-	s.pattern.octaves = 1;
-	s.pattern.lacunarity = 2.0;
-	s.pattern.persistence = 0.5;
-	s.pattern.base_animation = 1.0;
-	s.pattern.temporal_lacunarity = 2.0;
-	s.pattern.smoothness = 0;
-	s.pattern.adaptive_scale = true;
+	s.main.base_frequency = PATTERN_DIMENSION_TYPE(1.0);
+	s.main.octaves = 1;
+	s.main.lacunarity = 2.0;
+	s.main.persistence = 0.5;
+	s.main.base_animation = 1.0;
+	s.main.temporal_lacunarity = 2.0;
+	s.main.smoothness = 0;
+	s.main.adaptive_scale = true;
 	
-	s.curl = s.pattern;
+	s.curl = s.main;
 	return s;
 }
 
@@ -139,14 +139,14 @@ FractalPatternSettings standard_fractal_pattern_settings() {
 	s.sliding = fractal_sliding;
 	s.slide_velocity = fractal_slide_velocity;
 	
-	s.pattern.base_frequency = pattern_frequency;
-	s.pattern.octaves = pattern_octaves;
-	s.pattern.lacunarity = pattern_lacunarity;
-	s.pattern.persistence = pattern_persistence;
-	s.pattern.base_animation = pattern_base_animation;
-	s.pattern.temporal_lacunarity = pattern_temporal_lacunarity;
-	s.pattern.smoothness = pattern_smoothness;
-	s.pattern.adaptive_scale = pattern_adaptive_scale;
+	s.main.base_frequency = pattern_frequency;
+	s.main.octaves = pattern_octaves;
+	s.main.lacunarity = pattern_lacunarity;
+	s.main.persistence = pattern_persistence;
+	s.main.base_animation = pattern_base_animation;
+	s.main.temporal_lacunarity = pattern_temporal_lacunarity;
+	s.main.smoothness = pattern_smoothness;
+	s.main.adaptive_scale = pattern_adaptive_scale;
 
 #ifdef USE_FRACTAL_PATTERN_CURL
 	s.curl_enabled = fractal_curl;

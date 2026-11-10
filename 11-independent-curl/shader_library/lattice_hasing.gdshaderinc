@@ -37,13 +37,12 @@ LatticeSquare get_lattice_square(
 		bool use_tiling
 ) {
 	LatticeSquare s;
-	vec2 f = vec2(frequency);
-	vec2 sample_coordinates = f * uv;
+	vec2 sample_coordinates = frequency * uv;
 	vec2 lattice_coordinates = floor(sample_coordinates);
 	s.uv = sample_coordinates - lattice_coordinates;
 	
-	vec2 uLattice = lattice01(lattice_coordinates.x, f.x, use_tiling);
-	vec2 vLattice = lattice01(lattice_coordinates.y, f.y, use_tiling);
+	vec2 uLattice = lattice01(lattice_coordinates.x, frequency.x, use_tiling);
+	vec2 vLattice = lattice01(lattice_coordinates.y, frequency.y, use_tiling);
 	
 	Hasher h = hasher(seed);
 	Hasher h0 = hasher(h, uLattice.x);

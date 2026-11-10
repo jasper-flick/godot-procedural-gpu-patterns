@@ -10,8 +10,8 @@ uniform bool vertex_displacement = true;
 
 #define USE_FRACTAL_PATTERN_CURL
 #define USE_STANDARD_FRACTAL_PATTERN_SETTINGS
-#define SAMPLE_PATTERN_FUNCTION sample_square_value_noise
-#include "res://shader_library/square_value_noise.gdshaderinc"
+#define SAMPLE_PATTERN_FUNCTION sample_square_blended_value_noise
+#include "res://shader_library/square_blended_value_noise.gdshaderinc"
 #include "res://shader_library/fractal_pattern.gdshaderinc"
 
 vec3 colorize(float v) {
@@ -30,8 +30,7 @@ vec3 colorize(float v) {
 }
 
 PatternSample sample_noise(vec2 uv) {
-	FractalPatternSettings settings = standard_fractal_pattern_settings();
-	return sample_fractal(settings, uv, TIME);
+	return sample_fractal(standard_fractal_pattern_settings(), uv, TIME);
 }
 
 void vertex() {

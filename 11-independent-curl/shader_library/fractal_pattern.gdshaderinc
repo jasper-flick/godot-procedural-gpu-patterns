@@ -60,7 +60,7 @@ PatternSample sample_fractal_pattern(
 		PATTERN_DIMENSION_TYPE coordinates,
 		float time
 ) {
-	FractalSettings pattern = settings.pattern;
+	FractalSettings pattern = settings.main;
 	PatternSample sum = zero_pattern_sample();
 	PATTERN_DIMENSION_TYPE frequency = pattern.base_frequency;
 	float animation_offset = pattern.base_animation * time;
@@ -83,7 +83,7 @@ PatternSample sample_fractal_curl(
 		vec2 uv,
 		float time
 ) {
-	FractalSettings pattern = settings.pattern;
+	FractalSettings pattern = settings.main;
 	PatternSample sum = zero_pattern_sample();
 	PATTERN_DIMENSION_TYPE frequency = pattern.base_frequency;
 	float animation_offset = pattern.base_animation * time;
@@ -108,7 +108,7 @@ void sample_fractal_curl(
 	out PatternSample v
 ) {
 	settings.seed ^= 255u;
-	settings.pattern = settings.curl;
+	settings.main = settings.curl;
 	
 	PatternSample s = sample_fractal_curl(settings, uv, time);
 	float epsilon = 0.001;
@@ -120,7 +120,7 @@ void sample_fractal_curl(
 	);
 	
 	float smoothness_normalization = 1.0;
-	switch (settings.pattern.smoothness) {
+	switch (settings.main.smoothness) {
 		case 2:
 			smoothness_normalization = 2.0 / 3.0;
 			break;
@@ -130,7 +130,7 @@ void sample_fractal_curl(
 	}
 	vec2 scale = vec2(
 			settings.curl_strength * smoothness_normalization / epsilon /
-			settings.pattern.base_frequency
+			settings.main.base_frequency
 	);
 	u = multiply(subtract(sy, s), scale.y);
 	v = multiply(subtract(sx, s), -scale.x);
