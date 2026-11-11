@@ -2,7 +2,7 @@
 Functions for fractal pattern sampling.
 
 Typical use case is to only call sample_fractal.
-It takes care of pattern sliding and applies curl if enabled.
+It takes care of pattern tiling, sliding, and curling.
 Its parameters are:
 - FractalPatternSettings for the fractal settings.
 - SAMPLE_PATTERN_COORDINATES_TYPE for the sample coordinates.
@@ -142,7 +142,7 @@ PatternSample sample_fractal_pattern_with_curl(
 	float time
 ) {
 	PatternSample u, v;
-	if (settings.curl_enabled) {
+	if (settings.curling) {
 		sample_fractal_curl(settings, uv, time, u, v);
 		u.v += uv.x;
 		u.dx += 1.0;
@@ -159,7 +159,7 @@ PatternSample sample_fractal_pattern_with_curl(
 		}
 	}
 	PatternSample s = sample_fractal_pattern(settings, uv, TIME);
-	if (settings.curl_enabled) {
+	if (settings.curling) {
 		PATTERN_SAMPLE_VALUE_TYPE dx = s.dx;
 		s.dx = u.dx * dx + v.dx * s.dy;
 		s.dy = u.dy * dx + v.dy * s.dy;

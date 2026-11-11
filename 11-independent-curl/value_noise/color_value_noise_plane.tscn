@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://cxrcxlgnvcye0"]
+
+[ext_resource type="Shader" uid="uid://cu0qt2fmfatrg" path="res://value_noise/color_value_noise.gdshader" id="1_jb8uh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5faqg"]
+render_priority = 0
+shader = ExtResource("1_jb8uh")
+shader_parameter/bumpiness = Vector2(0.5, 0.5)
+shader_parameter/displacement = 0.25000005937500003
+shader_parameter/vertex_displacement = true
+shader_parameter/fractal_seed = 0
+shader_parameter/fractal_tiling = false
+shader_parameter/fractal_animating = true
+shader_parameter/fractal_sliding = false
+shader_parameter/fractal_slide_velocity = Vector2(1, 1)
+shader_parameter/fractal_curling = true
+shader_parameter/fractal_curl_strength = 0.12500005343749998
+shader_parameter/pattern_frequency = Vector2(8, 8)
+shader_parameter/pattern_octaves = 4
+shader_parameter/pattern_lacunarity = 2.0000000149012003
+shader_parameter/pattern_persistence = 0.5
+shader_parameter/pattern_base_animation = 0.5
+shader_parameter/pattern_temporal_lacunarity = 2.0
+shader_parameter/pattern_smoothness = 3
+shader_parameter/pattern_adaptive_scale = true
+shader_parameter/curl_frequency = Vector2(2, 2)
+shader_parameter/curl_octaves = 2
+shader_parameter/curl_lacunarity = 2.0000000149012003
+shader_parameter/curl_persistence = 0.5
+shader_parameter/curl_base_animation = 0.5
+shader_parameter/curl_temporal_lacunarity = 2.0
+shader_parameter/curl_smoothness = 3
+shader_parameter/curl_adaptive_scale = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_r8t2q"]
+subdivide_width = 127
+subdivide_depth = 127
+
+[node name="Node3D" type="Node3D" unique_id=1837617480]
+
+[node name="Plane" type="MeshInstance3D" parent="." unique_id=1941249539]
+material_override = SubResource("ShaderMaterial_5faqg")
+mesh = SubResource("PlaneMesh_r8t2q")

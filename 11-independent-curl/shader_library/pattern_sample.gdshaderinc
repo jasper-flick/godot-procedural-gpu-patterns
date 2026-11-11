@@ -2,8 +2,8 @@
 Declares the PatternSample struct used by fractal_pattern.gdshaderinc.
 
 Define PATTERN_SAMPLE_DIMENSIONS to set the value dimensions.
-Allowed values are 1, 2, and 3. The default is 1.
-The corresponding coordinate types are float, vec2, and vec3.
+Allowed values are 1, 2, 3, and 4. The default is 1.
+The corresponding coordinate types are float, vec2, vec3, and vec4.
 The value field is named v.
 
 Up to three derivatives are supported, with the same type as the value.
@@ -19,8 +19,10 @@ The derivative fields are named dx, dy, dz.
 #define PATTERN_SAMPLE_VALUE_TYPE float
 #elif PATTERN_SAMPLE_DIMENSIONS == 2
 #define PATTERN_SAMPLE_VALUE_TYPE vec2
-#else
+#elif PATTERN_SAMPLE_DIMENSIONS == 3
 #define PATTERN_SAMPLE_VALUE_TYPE vec3
+#else
+#define PATTERN_SAMPLE_VALUE_TYPE vec4
 #endif
 
 struct PatternSample {
@@ -152,14 +154,16 @@ PATTERN_SAMPLE_VALUE_TYPE hasher_to_value(Hasher h) {
 	return hash_to_float(hash(h));
 #elif PATTERN_SAMPLE_DIMENSIONS == 2
 	return hash_to_vec2(hash(h));
-#else
+#elif PATTERN_SAMPLE_DIMENSIONS == 3
 	return hash_to_vec3(hash(h));
+#else
+	return hash_to_vec4(hash(h));
 #endif
 }
 
-PatternSample hasher_to_value_sample(Hasher h, float time, bool use_animation) {
+PatternSample hasher_to_value_sample(Hasher h, float time, bool animating) {
 	PatternSample s = zero_pattern_sample();
-	if (use_animation) {
+	if (animating) {
 		float t0 = floor(time);
 		float t1 = t0 + 1.0;
 		s.v = mix(

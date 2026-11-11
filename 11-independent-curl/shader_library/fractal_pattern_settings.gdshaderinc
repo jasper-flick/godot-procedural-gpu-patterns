@@ -4,10 +4,10 @@ Settings for generating fractal patterns.
 FractalPatternSettings struct has the following settings:
 - seed: The seed value, potentially used for hashing (default 0).
 - tiling: Whether the whole pattern tiles (default false).
-- animation: Whether the  whole pattern animates (default false).
+- animating: Whether the whole pattern animates (default false).
 - sliding: Whether the whole pattern slides (default false).
 - slide_velocity: How fast the pattern slides (default 1.0).
-- curl_enabled: Whether the main pattern is curled (default false).
+- curling: Whether the main pattern is curled (default false).
 - curl_strength: How much curl is applied (default 0.0).
 - main: FractalSettings for the main pattern.
 - curl: FractalSettings for the curl pattern.
@@ -59,10 +59,10 @@ struct FractalSettings {
 struct FractalPatternSettings {
 	uint seed;
 	bool tiling;
-	bool animation;
+	bool animating;
 	bool sliding;
 	PATTERN_DIMENSION_TYPE slide_velocity;
-	bool curl_enabled;
+	bool curling;
 	float curl_strength;
 	FractalSettings main;
 	FractalSettings curl;
@@ -72,10 +72,10 @@ FractalPatternSettings default_fractal_pattern_settings() {
 	FractalPatternSettings s;
 	s.seed = 0u;
 	s.tiling = false;
-	s.animation = false;
+	s.animating = false;
 	s.sliding = false;
 	s.slide_velocity = PATTERN_DIMENSION_TYPE(1.0);
-	s.curl_enabled = false;
+	s.curling = false;
 	s.curl_strength = 0.0;
 	
 	s.main.base_frequency = PATTERN_DIMENSION_TYPE(1.0);
@@ -95,13 +95,13 @@ FractalPatternSettings default_fractal_pattern_settings() {
 group_uniforms Fractal;
 uniform uint fractal_seed = 0u;
 uniform bool fractal_tiling = false;
-uniform bool fractal_animation = false;
+uniform bool fractal_animating = false;
 uniform bool fractal_sliding = false;
 uniform PATTERN_DIMENSION_TYPE fractal_slide_velocity =
 		PATTERN_DIMENSION_TYPE(1.0);
 
 #ifdef USE_FRACTAL_PATTERN_CURL
-uniform bool fractal_curl = false;
+uniform bool fractal_curling = false;
 uniform float fractal_curl_strength : hint_range(-1.0, 1.0) = 0.0;
 #endif
 
@@ -135,7 +135,7 @@ FractalPatternSettings standard_fractal_pattern_settings() {
 	FractalPatternSettings s = default_fractal_pattern_settings();
 	s.seed = fractal_seed;
 	s.tiling = fractal_tiling;
-	s.animation = fractal_animation;
+	s.animating = fractal_animating;
 	s.sliding = fractal_sliding;
 	s.slide_velocity = fractal_slide_velocity;
 	
@@ -149,7 +149,7 @@ FractalPatternSettings standard_fractal_pattern_settings() {
 	s.main.adaptive_scale = pattern_adaptive_scale;
 
 #ifdef USE_FRACTAL_PATTERN_CURL
-	s.curl_enabled = fractal_curl;
+	s.curling = fractal_curling;
 	s.curl_strength = fractal_curl_strength;
 	s.curl.base_frequency = curl_frequency;
 	s.curl.octaves = curl_octaves;

@@ -40,3 +40,12 @@ vec3 hash_to_vec3(uint hash) {
 			(hash >> 9u) & 0x007FE000u
 	) | uvec3(0x3F800000u)) - 1.0;
 }
+
+vec4 hash_to_vec4(uint hash) {
+	return uintBitsToFloat(uvec4(
+			hash << 15u,
+			hash << 7u,
+			hash >> 1u,
+			hash >> 9u
+	) & uvec4(0x007F8000u) | uvec4(0x3F800000u)) - 1.0;
+}

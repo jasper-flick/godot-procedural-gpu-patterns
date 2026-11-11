@@ -3,8 +3,8 @@ shader_type spatial;
 uniform int visualization : hint_enum("Grayscale", "RG", "RGB") = 0;
 uniform bool staggered_animation = true;
 
-#define USE_FRACTAL_PATTERN_CURL
 #define PATTERN_SAMPLE_DIMENSIONS 3
+#define USE_FRACTAL_PATTERN_CURL
 #define USE_STANDARD_FRACTAL_PATTERN_SETTINGS
 #include "res://shader_library/fractal_pattern_settings.gdshaderinc"
 #include "res://shader_library/pattern_sample.gdshaderinc"
@@ -21,7 +21,7 @@ PatternSample sample_hash(
 	Hasher h = hasher(settings.seed + uint(octave));
 	h = hasher(h, coordinates.x);
 	h = hasher(h, coordinates.y);
-	if (settings.animation) {
+	if (settings.animating) {
 		if (staggered_animation) {
 			time += fract((coordinates.x + coordinates.y) * 0.5);
 		}

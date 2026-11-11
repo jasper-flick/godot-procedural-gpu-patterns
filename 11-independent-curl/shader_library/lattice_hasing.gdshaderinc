@@ -3,8 +3,8 @@ Lattice hasing functions for 2D lattice noise, like square value noise.
 */
 #include "res://shader_library/hasher.gdshaderinc"
 
-vec2 lattice01(float lattice_coordinate, float frequency, bool use_tiling) {
-	if (!use_tiling) {
+vec2 lattice01(float lattice_coordinate, float frequency, bool tiling) {
+	if (!tiling) {
 		return vec2(lattice_coordinate, lattice_coordinate + 1.0);
 	}
 	else {
@@ -34,15 +34,15 @@ LatticeSquare get_lattice_square(
 		vec2 uv,
 		vec2 frequency,
 		float time,
-		bool use_tiling
+		bool tiling
 ) {
 	LatticeSquare s;
 	vec2 sample_coordinates = frequency * uv;
 	vec2 lattice_coordinates = floor(sample_coordinates);
 	s.uv = sample_coordinates - lattice_coordinates;
 	
-	vec2 uLattice = lattice01(lattice_coordinates.x, frequency.x, use_tiling);
-	vec2 vLattice = lattice01(lattice_coordinates.y, frequency.y, use_tiling);
+	vec2 uLattice = lattice01(lattice_coordinates.x, frequency.x, tiling);
+	vec2 vLattice = lattice01(lattice_coordinates.y, frequency.y, tiling);
 	
 	Hasher h = hasher(seed);
 	Hasher h0 = hasher(h, uLattice.x);

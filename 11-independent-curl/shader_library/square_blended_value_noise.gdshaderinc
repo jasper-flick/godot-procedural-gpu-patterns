@@ -23,10 +23,10 @@ PatternSample sample_square_blended_value_noise(
 			settings.seed + uint(octave), uv, frequency, time, settings.tiling
 	);
 	PatternSample s = blend_square(
-			value_sample(square.h00, square.time_a, settings.animation),
-			value_sample(square.h10, square.time_b, settings.animation),
-			value_sample(square.h01, square.time_b, settings.animation),
-			value_sample(square.h11, square.time_a, settings.animation),
+			value_sample(square.h00, square.time_a, settings.animating),
+			value_sample(square.h10, square.time_b, settings.animating),
+			value_sample(square.h01, square.time_b, settings.animating),
+			value_sample(square.h11, square.time_a, settings.animating),
 			square.uv,
 			settings.main.smoothness
 	);
